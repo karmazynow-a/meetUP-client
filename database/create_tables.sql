@@ -1,0 +1,29 @@
+CREATE TABLE person (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nickname varchar(30) NOT NULL,
+  password varchar(30) NOT NULL
+);
+
+CREATE TABLE event (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name varchar(30) NOT NULL,
+  key varchar(30) NOT NULL,
+  date varchar(20) NOT NULL
+);
+
+CREATE TABLE participation (
+  person_id int NOT NULL,
+  event_id int NOT NULL,
+  PRIMARY KEY CLUSTERED ( person_id, event_id ),
+  FOREIGN KEY ( person_id ) REFERENCES person(id) ON UPDATE  NO ACTION  ON DELETE  CASCADE,
+  FOREIGN KEY ( event_id ) REFERENCES event(id) ON UPDATE  NO ACTION  ON DELETE  CASCADE
+);
+
+CREATE TABLE comment (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  author_id int NOT NULL,
+  event_id int NOT NULL,
+  content varchar(50) NOT NULL,
+  FOREIGN KEY (author_id) REFERENCES person(id),
+  FOREIGN KEY (event_id) REFERENCES event(id)
+);
