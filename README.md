@@ -5,7 +5,7 @@ The web app to sign up for private events. Users can find events only by enterin
 ReactJS
 
 ## Server
-JEE
+Spring MVC
 
 ## Database
 PostgreSQL - ElephantDB
