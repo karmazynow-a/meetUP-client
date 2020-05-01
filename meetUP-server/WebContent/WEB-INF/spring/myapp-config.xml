@@ -31,6 +31,19 @@
 	<bean id="jsonMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 	</bean>
+	
+	<bean id="dbDataSource"
+	    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	    <property name="driverClassName"
+	        value="org.postgresql.Driver" />
+	    <property name="url"
+	        value=" --url-host-- " />
+	    <property name="username" value=" --user-- " />
+	    <property name="password"
+	        value=" --pass-- " />
+	</bean>
+	
+	<bean id="commentDao" class="model.comment.CommentDaoImpl">	</bean>
 
 	
 </beans>
