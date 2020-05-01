@@ -1,4 +1,4 @@
-package model;
+package model.person;
 
 //import javax.xml.bind.annotation.XmlRootElement;
 //@XmlRootElement
@@ -8,7 +8,7 @@ public class Person {
 	  private Integer id;
 	  
 	  public Person () {}
-	  public Person (String nickname, String password, Integer id) {
+	  public Person (Integer id, String nickname, String password) {
 		  this.nickname = nickname;
 		  this.password = password;
 		  this.id = id;

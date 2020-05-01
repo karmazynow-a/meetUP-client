@@ -1,4 +1,4 @@
-package model;
+package model.participation;
 
 public class Participation {
 	private Integer person_id;
