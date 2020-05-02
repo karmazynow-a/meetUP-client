@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 
 class SignUp extends Component {
     state = {
-        nickname: '',
         password: '',
         fname: '',
         lname: '',
@@ -19,6 +19,15 @@ class SignUp extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state);
+
+        //TODO authenticate
+        axios.post("https://alporeba-zti-projekt.eu-gb.mybluemix.net/db/rest/person/", this.state)
+            .then(res => {
+                console.log(res); 
+        })
+        
+        this.props.setAuth(true);
+        this.props.history.push("/");
     }
 
     render() {
@@ -31,10 +40,6 @@ class SignUp extends Component {
                                 <div className="card-content  center">
                                     <h5 className="card-title center grey-text text-darken-3">Sign Up</h5>
                                     <form onSubmit={this.handleSubmit} className="white">
-                                        <div className="input-field">
-                                            <label htmlFor="nickname">Nickname</label>
-                                            <input type="text" id="nickname" onChange={this.handleChange} />
-                                        </div>
                                         <div className="input-field">
                                             <label htmlFor="fname">First name</label>
                                             <input type="text" id="fname" onChange={this.handleChange} />

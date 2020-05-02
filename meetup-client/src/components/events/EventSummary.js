@@ -1,12 +1,16 @@
 import React from 'react'
 
-const EventSummary = () => {
+import {NavLink, Link} from 'react-router-dom'
+
+const EventSummary = ({event}) => {
     return (
         <div className="card event-summary">
             <div className="card-content grey-text text-darken-3">
-                <span className="card-title">Event title</span>
-                <p>Name</p>
-                <p className="grey-text">Date</p>
+                <span className="card-title">
+                    <NavLink to={'/event/' + event.id}> {event.name}</NavLink>
+                    </span>
+                <p>{event.author_fname} {event.author_lname}</p>
+                <p className="grey-text">{event.date}</p>
             </div>
         </div>
     )

@@ -2,12 +2,17 @@ import React from 'react'
 
 import Comment from './Comment'
 
-const CommentList = () => {
+const CommentList = ({comments}) => {
+    var outputComments = comments && comments.map(comment => {
+        return (
+            <Comment comment={comment} key={comment.id}/>
+        )
+
+    })
+
     return (
         <div className="comment-list section">
-            <Comment />
-            <Comment />
-            <Comment />
+            {outputComments}
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import Dashboard from './components/dashboard/Dashboard'
@@ -9,8 +9,7 @@ import SignIn from './components/authentication/SignIn'
 import SignUp from './components/authentication/SignUp'
 import EventManager from './components/dashboard/EventManager';
 
-class App extends Component {
-  render() {
+const App = () => {
     return (
       <BrowserRouter>
         <div className="App">
@@ -20,12 +19,12 @@ class App extends Component {
             <Route path='/signup' component={SignUp} />
             <Route path='/event/:id' component={EventDetails} />
             <Route path='/manage' component={EventManager} />
-            <Route path='/' component={Dashboard} />
+            <Route path='/' component={Dashboard}/>} />
           </Switch>
         </div>
       </BrowserRouter>
     );
-  }
+  
 }
 
 export default App;

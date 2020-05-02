@@ -2,12 +2,16 @@ import React from 'react'
 
 import ManageEvent from './ManageEvent'
 
-const EventManagerList = () => {
+const EventManagerList = ({events}) => {
+    var outputEvents = events && events.map(event => {
+        return (
+            <ManageEvent event={event} key={event.id}/>
+        )
+    })
+
     return (
         <div className="event-list section">
-            <ManageEvent />
-            <ManageEvent />
-            <ManageEvent />
+            {outputEvents}
         </div>
     )
 }

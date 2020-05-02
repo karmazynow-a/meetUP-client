@@ -2,14 +2,19 @@ import React from 'react'
 
 import Participant from './Participant'
 
-const ParticipantList = () => {
+const ParticipantList = ({participants}) => {
+
+    var outputParticipants = participants && participants.map(participant => {
+        return (
+            <Participant participant={participant}/>
+        )
+    })
+
     return (
         <div className="participant-list section card">
             <div className="card-content">
                 <span className="card-title">Participants</span>
-                <Participant />
-                <Participant />
-                <Participant />
+                {outputParticipants}
             </div>
         </div>
     )

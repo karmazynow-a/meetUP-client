@@ -4,6 +4,8 @@ import EventSummary from './EventSummary'
 import ParticipantList from './participants/ParticipantList'
 import CommentList from './comments/CommentList'
 import CreateComment from './comments/CreateComment'
+import {connect} from 'react-redux'
+import {getEventDetailsAction, getEventPartAction, getEventCommAction} from '../../store/actions/eventReducerActions'
 
 class AddCommentSection extends Component {
     state = {
@@ -38,24 +40,57 @@ class AddCommentSection extends Component {
     }
 }
 
-const EventDetails = () => {
-    //const id = props.match.params.id;
-    return (
-        <div className="dashboard container">
-            <div className="row">
-                <div className="col s12 m6">
-                    <div className="section">
-                        <EventSummary />
+class EventDetails extends Component {
+    state = {
+        'event': { id: '', name: 'Default name', author_lname: 'Default lname', author_fname: 'Default fname', date: 'Default date'},
+        comments: [{content: 'comm1', date: 'date', author_lname: 'lname', author_fname: 'fname'}, {content: 'comm2', date: 'date', author_lname: 'lname', author_fname: 'fname'}],
+        participants: [{lname:"LN1", fname:"FN1"}, {lname:"LN2", fname:"FN2"}],
+    }
+
+    componentDidMount = () => {
+        var id = this.props.match.params.id;
+
+        this.props.getEventDetailsAction(id);
+        this.props.getEventPartAction(id);
+        this.props.getEventCommAction(id);
+    }
+
+    render() {
+        console.log(this.props)
+        console.log(this.state)
+        return (
+            <div className="dashboard container">
+                <div className="row">
+                    <div className="col s12 m6">
+                        <div className="section">
+                            <EventSummary event={this.props.details}/>
+                        </div>
+                        <ParticipantList participants={this.props.participants}/>
                     </div>
-                    <ParticipantList />
-                </div>
-                <div className="col s12 m5 offset-m1">
-                    <AddCommentSection />
-                    <CommentList />
+                    <div className="col s12 m5 offset-m1">
+                        <AddCommentSection />
+                        <CommentList comments={this.props.comments}/>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
-export default EventDetails;
+const mapStateToProps = (state) => {
+    return {
+        details: state.event.details,
+        participants: state.event.participants,
+        comments: state.event.comments
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getEventDetailsAction: (id) => dispatch(getEventDetailsAction(id)),
+        getEventCommAction: (id) => dispatch(getEventCommAction(id)),
+        getEventPartAction: (id) => dispatch(getEventPartAction(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventDetails);

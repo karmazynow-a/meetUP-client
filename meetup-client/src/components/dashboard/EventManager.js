@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import EventManagerList from '../events/EventManagerList'
 import CreateEvent from '../events/CreateEvent'
+import {connect} from 'react-redux'
+import {getAuthorEventsAction} from '../../store/actions/userReducerActions'
+import LoginError from './LoginError'
 
 class AddEventSection extends Component {
     state = {
@@ -38,20 +41,42 @@ class AddEventSection extends Component {
 
 }
 
-const EventManager  = () => {
-        return (
+class EventManager extends Component {
+
+    componentDidMount = () => {
+        if (this.props.isAuth) {
+            this.props.getAuthorEventsAction(this.props.userDetails.id);
+        }
+    }
+
+    render () {
+        return this.props.isAuth ? (
             <div className="container">
                 <div className="row">
                     <div className="col s12 m6">
-                        <EventManagerList />
+                        <EventManagerList events={this.props.events}/>
                     </div>
                     <div className="col s12 m5 offset-m1">
                         <AddEventSection />
                     </div>
                 </div>
             </div>
-        )
-
+        ) : <LoginError/>
+    }
 }
 
-export default EventManager;
+const mapStateToProps = (state) => {
+    return {
+        isAuth: state.user.isAuth,
+        userDetails: state.user.userDetails,
+        events: state.user.author_events
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getAuthorEventsAction: (id) => dispatch(getAuthorEventsAction(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventManager);

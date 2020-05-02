@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Participant = () => {
+const Participant = ({participant}) => {
     return (
         <div className="card z-depth-0 event-summary">
             <div className="card-content grey-text text-darken-3">
-                <p>Nickname</p>
+                <p>{participant.fname} {participant.lname}</p>
             </div>
         </div>
     )
