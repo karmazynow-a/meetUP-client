@@ -45,7 +45,7 @@ public class CommentDaoImpl implements CommentDao {
 	
 	@Override
 	public List<Map<String, Object>> getCommentByEventId(Integer event_id) {
-		String query = "SELECT c.content, c.date, c.id, p.id AS author_id, p.lname AS author_lname, p.fname AS author_fname FROM comment c "
+		String query = "SELECT c.content, c.date, c.id, c.event_id, p.id AS author_id, p.lname AS author_lname, p.fname AS author_fname FROM comment c "
 				+ "JOIN event e ON e.id=c.event_id "
 				+ "JOIN person p ON p.id=c.author_id "
 				+ "WHERE e.id=?";

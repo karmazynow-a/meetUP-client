@@ -63,7 +63,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
 	public int delete(Integer person_id, Integer event_id) {
 		String sql = "DELETE FROM participation WHERE person_id=? AND event_id=?" ;
 		jdbcTemplate = new JdbcTemplate(dataSource);
-		return jdbcTemplate.update(sql, new Object[]{person_id}, new Object[]{event_id});
+		return jdbcTemplate.update(sql, person_id, event_id);
 	}
 
 }
