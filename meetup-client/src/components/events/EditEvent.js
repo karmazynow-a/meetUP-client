@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import editEventAction from '../../store/actions/eventReducerActions'
+import {editEventAction} from '../../store/actions/eventReducerActions'
 import moment from 'moment'
 
 class EditEvent extends Component {
@@ -24,7 +24,6 @@ class EditEvent extends Component {
         this.setState({
             [e.target.id]: e.target.value
         })
-        console.log(this.state);
     }
 
     handleSubmit = (e) => {
@@ -32,16 +31,15 @@ class EditEvent extends Component {
         let date = this.state.date + ' ' + this.state.time
 
         let event = {
+            id: this.props.event.id,
             name: this.state.name, 
             key: this.state.key,
             author_id: this.props.author_id,
             date: date
         }
 
-        console.log(event);
-
-        //send reducer
-        //this.props.editEventAction(event)
+        this.props.editEventAction(event);
+        this.props.edit_done();
     }
 
     generateKey = (e) => {

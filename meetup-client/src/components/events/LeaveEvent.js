@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import leaveEventAction from '../../store/actions/eventReducerActions'
+import {leaveEventAction} from '../../store/actions/eventReducerActions'
 
 
 class LeaveEvent extends Component {
 
-    handleChange = (e) => {
+    handleLeave = (e) => {
         //reduver to leave event
-        //this.props.leaveEventAction(this.props.event_id, this.props.person_id);
+        console.log("leaving", this.props.event_id, this.props.person_id)
+        this.props.leaveEventAction(this.props.event_id, this.props.person_id);
+        this.props.history.push("/");
     }
 
     render() {
@@ -20,7 +22,7 @@ class LeaveEvent extends Component {
                                 <span className="card-title">Leave event</span>
                             </div>
                             <div className="col s6 m4">
-                                <a onClick={this.onClick} className="btn-floating waves-effect waves-light deep-purple lighten-1"><i className="material-icons">exit_to_app</i></a>
+                                <a onClick={this.handleLeave} className="btn-floating waves-effect waves-light deep-purple lighten-1"><i className="material-icons">exit_to_app</i></a>
                             </div>
                         </div>
                     </div>
@@ -31,7 +33,6 @@ class LeaveEvent extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         person_id: state.user.userDetails.id,
         event_id: state.event.details.id

@@ -7,7 +7,7 @@ import {getPartEventsAction} from '../../store/actions/userReducerActions'
 
 class Dashboard extends Component {
 
-    componentDidMount = () => {
+    componentDidUpdate = () => {
         if (this.props.isAuth) {
             this.props.getPartEventsAction(this.props.userDetails.id);
         }

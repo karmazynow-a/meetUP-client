@@ -35,7 +35,8 @@ const eventReducer = (state = initState, action) => {
     else if (action.type === 'FIND_EVENT') {
         return {
             ...state,
-            isParticipant: false
+            isParticipant: false,
+            isLatestKeyFound: action.found
         }
     }
     else if (action.type === 'JOIN_EVENT') {

@@ -14,10 +14,17 @@ class AddCommentSection extends Component {
         createFormVisible: false,
     }
 
-    handleClick = () => {
+    handleClick = (e) => {
         this.setState({
             ...this.state,
             createFormVisible: ~this.state.createFormVisible,
+        });
+    }
+
+    commentDone = () => {
+        this.setState({
+            ...this.state,
+            createFormVisible: false,
         });
     }
 
@@ -36,7 +43,7 @@ class AddCommentSection extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.createFormVisible ? <CreateComment /> : ''}
+                {this.state.createFormVisible ? <CreateComment comment_done={this.commentDone} /> : ''}
             </div>
         )
     }
@@ -64,7 +71,7 @@ class EventDetails extends Component {
                         <ParticipantList participants={this.props.participants}/>
                     </div>
                     <div className="col s12 m5 offset-m1">
-                        <LeaveEvent />
+                        { (this.props.person_id !== this.props.details.author_id) ? <LeaveEvent /> : ""}
                         <AddCommentSection />
                         <CommentList comments={this.props.comments}/>
                     </div>
@@ -76,6 +83,7 @@ class EventDetails extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        person_id: state.user.userDetails.id,
         details: state.event.details,
         participants: state.event.participants,
         comments: state.event.comments

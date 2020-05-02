@@ -1,6 +1,7 @@
 import React from 'react'
 
 import EventSummary from './EventSummary'
+import EmptyEvent from './EmptyEvent'
 
 
 const EventList = ({events}) => {
@@ -10,6 +11,8 @@ const EventList = ({events}) => {
             <EventSummary event={event} key={event.id}/>
         )
     })
+
+    outputEvents = events.length ? outputEvents : <EmptyEvent />;
 
     return (
         <div className="event-list section">

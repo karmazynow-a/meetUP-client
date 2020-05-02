@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import addEventAction from '../../store/actions/eventReducerActions'
+import {addEventAction} from '../../store/actions/eventReducerActions'
 
 class CreateEvent extends Component {
     state = {
@@ -27,7 +27,7 @@ class CreateEvent extends Component {
             date: date
         }
 
-        console.log(event);
+        this.props.addEventAction(event);
     }
 
     generateKey = (e) => {

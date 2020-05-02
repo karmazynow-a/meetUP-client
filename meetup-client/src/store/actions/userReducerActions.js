@@ -1,33 +1,50 @@
 import axios from 'axios';
 import {config} from '../../config'
 
-//TODO : auth after the db fix
 export const authAction = (credentials) => {
     return (dispatch, getState) => {
-        /*
-        let dbAuthlink = config.dblink + 'person/mail/' + credentials.mail;
+        let dbAuthlink = config.dblink + 'person/email/' + credentials.email + "/";
         axios.get(dbAuthlink)
             .then(res => {
-                console.log(res);
-                //TODO actually authenticate
+                if(res.status === 200){
+                    if (res.data.password === credentials.password){
 
+                        let userDetails = {
+                            id: ""+res.data.id,
+                            lname: res.data.lname,
+                            fname: res.data.fname,
+                            email: res.data.email,
+                        }
 
-            });
-            */
-           let userDetails = {
-            id: '1',
-            lname: 'dummy lname',
-            fname: 'dummy fname',
-            mail: 'dummy mail',
-        }
+                        dispatch({type: 'AUTH_USER', userDetails: userDetails});
+                    } else {
+                        alert("Wrong e-mail or password!")
+                    }
 
-        console.log(userDetails)
-
-        dispatch({type: 'AUTH_USER', userDetails: userDetails});
+                }
+            });   
     }
 }
 
-//TODO: link to component
+export const signupAction = (credentials) => {
+    return (dispatch, getState) => {
+        let dbAuthlink = config.dblink + 'person/';
+
+        axios.post(dbAuthlink, credentials)
+            .then(res => {
+                console.log(res.status);
+
+                //login the user
+                dispatch(authAction({
+                    email: credentials.email,
+                    password: credentials.password
+                }));
+
+                dispatch({ type: 'NEW_USER' });
+            })
+    }
+}
+
 export const logoutAction = () => {
     return (dispatch, getState) => {
         dispatch({type: 'LOGOUT_USER'});

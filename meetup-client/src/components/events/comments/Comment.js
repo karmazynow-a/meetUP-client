@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import deleteCommentAction from '../../../store/actions/eventReducerActions'
+import {deleteCommentAction} from '../../../store/actions/eventReducerActions'
 
 class Comment extends Component {
 
     handleClick = (e) => {
-        console.log("deleting", this.props.comment.id);
-        //this.props.deleteCommentAction(this.props.comment.id);
+        //FIX ME comment should has also event id
+        console.log("deleting", this.props.comment.id, ' from event ', this.props.comment.event_id);
+        this.props.deleteCommentAction(this.props.comment.id, this.props.comment.event_id);
     }
 
     render() {
-        let deleteBtn = (this.props.person_id === this.props.comment.author_id) ? (
+        let deleteBtn = ( parseInt(this.props.person_id, 10) === this.props.comment.author_id) ? (
             <a onClick={this.handleClick} className="btn-floating waves-effect waves-light deep-purple lighten-1"><i className="material-icons">delete</i></a>
         ) : ""
 
@@ -37,12 +38,13 @@ class Comment extends Component {
 const mapStateToProps = (state) => {
     return {
         person_id: state.user.userDetails.id,
+        event_id: state.event.details.id,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteCommentAction: (id) => dispatch(deleteCommentAction(id))
+        deleteCommentAction: (id, event_id) => dispatch(deleteCommentAction(id, event_id))
     }
 }
 

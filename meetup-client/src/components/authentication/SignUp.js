@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import {connect} from 'react-redux'
+import {signupAction} from '../../store/actions/userReducerActions'
 
 class SignUp extends Component {
     state = {
@@ -18,15 +19,8 @@ class SignUp extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
 
-        //TODO authenticate
-        axios.post("https://alporeba-zti-projekt.eu-gb.mybluemix.net/db/rest/person/", this.state)
-            .then(res => {
-                console.log(res); 
-        })
-        
-        this.props.setAuth(true);
+        this.props.signupAction(this.state)
         this.props.history.push("/");
     }
 
@@ -70,4 +64,10 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signupAction: (credentials) => dispatch(signupAction(credentials))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(SignUp);

@@ -8,6 +8,7 @@ import EventDetails from './components/events/EventDetails'
 import SignIn from './components/authentication/SignIn'
 import SignUp from './components/authentication/SignUp'
 import EventManager from './components/dashboard/EventManager';
+import Logout from './components/authentication/Logout'
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
             <Route path='/signup' component={SignUp} />
             <Route path='/event/:id' component={EventDetails} />
             <Route path='/manage' component={EventManager} />
+            <Route path='/logout' component={Logout} />
             <Route path='/' component={Dashboard}/>} />
           </Switch>
         </div>

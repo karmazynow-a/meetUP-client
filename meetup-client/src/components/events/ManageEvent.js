@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import deleteEventAction from '../../store/actions/eventReducerActions'
+import {deleteEventAction} from '../../store/actions/eventReducerActions'
 import EditEvent from './EditEvent'
 
 class ManageEvent extends Component {
@@ -17,13 +17,20 @@ class ManageEvent extends Component {
     }
 
     handleDelete = (e) => {
-        //this.props.deleteEventAction(this.props.event.id);
-        console.log('delete', this.props.event.id);
+        //FIX ME: no author_id bug
+        this.props.deleteEventAction(this.props.event.id, this.props.event.author_id);
+    }
+
+    edit_done = () => {
+        this.setState({
+            ...this.state,
+            showForm: false
+        });
     }
 
     render(){
-        return (
-            <div>
+        return this.state.showForm ?
+            (<EditEvent event={this.props.event} edit_done={this.edit_done}/>) : (
                 <div className="card event-summary">
                     <div className="card-content grey-text text-darken-3">
                         <div className="row">
@@ -43,16 +50,13 @@ class ManageEvent extends Component {
                         </div>
                     </div>
                 </div>
-
-                { this.state.showForm ? <EditEvent event={this.props.event}/> : "" }
-            </div>
-        )
+            )
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteEventAction: (id) => dispatch(deleteEventAction(id))
+        deleteEventAction: (id, author_id) => dispatch(deleteEventAction(id, author_id))
     }
 }
 

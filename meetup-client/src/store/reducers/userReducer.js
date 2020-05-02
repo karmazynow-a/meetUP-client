@@ -15,6 +15,9 @@ const userReducer = (state = initState, action) => {
             userDetails: action.userDetails
         }
     }
+    else if (action.type === 'NEW_USER') {
+        return state
+    }
     else if (action.type === 'LOGOUT_USER') {
         return {
             ...state,

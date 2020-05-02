@@ -33,6 +33,10 @@ export const getEventCommAction = (id) => {
             .then(res => {
                 dispatch({type: 'EVENT_COMMENT', comments: res.data});
             })
+            .catch(error => {
+                console.log("No comments found!")
+                dispatch({type: 'EVENT_COMMENT', comments: []});
+            });
         }
 }
 
@@ -42,15 +46,14 @@ export const addCommAction = (comment) => {
 
         axios.post(queryLink, comment)
             .then(res => {
-                console.log(res);
                 //refresh the comments
-                getEventCommAction(comment.event_id);
+                dispatch(getEventCommAction(comment.event_id));
                 dispatch({type: 'ADD_COMMENT'});
             })
         }    
 }
 
-export const deleteCommentAction = (id) => {
+export const deleteCommentAction = (id, event_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "comment/" + id;
 
@@ -58,33 +61,39 @@ export const deleteCommentAction = (id) => {
             .then(res => {
                 console.log(res);
                 //refresh the comments
-                //getEventCommAction(comment.event_id);
-
+                dispatch(getEventCommAction(event_id));
                 dispatch({type: 'DELETE_COMMENT'});
             })
         }    
 }
 
-//TODO
 export const findEventAction = (key) => {
     return (dispatch, getState) => {
-        let queryLink = config.dblink + "comment/";
+        let queryLink = config.dblink + "event/key/" + key;
 
         axios.get(queryLink)
             .then(res => {
-                console.log(res);
-                let id = res.id;
-                getEventDetailsAction(id);
-                getEventCommAction(id);
-                getEventPartAction(id);
+                if (res.status === 200){
+                    //key is found
 
-                dispatch({type: 'FIND_EVENT'});
+                    let id = res.data.id;
+                    dispatch(getEventDetailsAction(id));
+                    dispatch(getEventCommAction(id));
+                    dispatch(getEventPartAction(id));
+                    dispatch({type: 'FIND_EVENT', found: true});
+                }
+                else {
+                    dispatch({type: 'FIND_EVENT', found: false});
+                }
             })
+            .catch(error => {
+                console.log("Key not found!")
+            });
         }    
 }
 
 //TODO
-import getPartEventsAction from './userReducerActions'
+import {getPartEventsAction} from './userReducerActions'
 
 export const joinEventAction = (event_id, person_id) => {
     return (dispatch, getState) => {
@@ -102,32 +111,33 @@ export const joinEventAction = (event_id, person_id) => {
         }    
 }
 
+//FIXME db issues
 export const leaveEventAction = (event_id, person_id) => {
     return (dispatch, getState) => {
-        let queryLink = config.dblink + "participation/";
-
+        let queryLink = config.dblink + "participation/" + person_id + "/" + event_id;
         axios.delete(queryLink)
             .then(res => {
                 console.log(res);
 
-                getEventPartAction(event_id);
-                getPartEventsAction(person_id);
+                dispatch(getEventPartAction(event_id));
+                dispatch(getPartEventsAction(person_id));
 
                 dispatch({type: 'LEAVE_EVENT'});
             })
         }    
 }
 
-export const deleteEventAction = (id) => {
+
+import {getAuthorEventsAction} from './userReducerActions'
+export const deleteEventAction = (id, author_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/" + id;
 
         axios.delete(queryLink)
             .then(res => {
-                console.log(res);
+                console.log(res.status);
 
-                // update sth
-
+                dispatch(getAuthorEventsAction(author_id));
                 dispatch({type: 'DELETE_EVENT'});
             })
         }    
@@ -139,25 +149,23 @@ export const addEventAction = (event) => {
 
         axios.post(queryLink, event)
             .then(res => {
-                console.log(res);
-
-                // update sth
-
+                dispatch(getAuthorEventsAction(event.author_id));
                 dispatch({type: 'ADD_EVENT'});
             })
         }    
 }
 
+//FIXME: db put gives 500
 export const editEventAction = (event) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/";
 
+        console.log(event);
+
         axios.put(queryLink, event)
             .then(res => {
-                console.log(res);
-
-                // update sth
-
+                console.log(res.status);
+                dispatch(getAuthorEventsAction(event.author_id));
                 dispatch({type: 'EDIT_EVENT'});
             })
         }    

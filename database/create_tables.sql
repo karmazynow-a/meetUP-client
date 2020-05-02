@@ -12,7 +12,7 @@ CREATE TABLE event (
   key varchar(30) UNIQUE NOT NULL,
   author_id int NOT NULL,
   date varchar(20) NOT NULL,
-  FOREIGN KEY (author_id) REFERENCES person(id)
+  FOREIGN KEY (author_id) REFERENCES person(id) ON DELETE  CASCADE
 );
 
 CREATE TABLE participation (
@@ -29,6 +29,6 @@ CREATE TABLE comment (
   event_id int NOT NULL,
   date varchar(20) NOT NULL,
   content varchar(50) NOT NULL,
-  FOREIGN KEY (author_id) REFERENCES person(id),
-  FOREIGN KEY (event_id) REFERENCES event(id)
+  FOREIGN KEY (author_id) REFERENCES person(id) ON DELETE  CASCADE,
+  FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE  CASCADE
 );
