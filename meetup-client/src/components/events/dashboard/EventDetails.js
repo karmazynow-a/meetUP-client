@@ -71,7 +71,7 @@ class EventDetails extends Component {
                         <ParticipantList participants={this.props.participants}/>
                     </div>
                     <div className="col s12 m5 offset-m1">
-                        { (this.props.person_id !== this.props.details.author_id) ? <LeaveEvent /> : ""}
+                        { ( parseInt(this.props.person_id, 10) !== this.props.details.author_id) ? <LeaveEvent /> : ""}
                         <AddCommentSection />
                         <CommentList comments={this.props.comments}/>
                     </div>

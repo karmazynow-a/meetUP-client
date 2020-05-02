@@ -92,21 +92,20 @@ export const findEventAction = (key) => {
         }    
 }
 
-//TODO
+
 import {getPartEventsAction} from './userReducerActions'
 
 export const joinEventAction = (event_id, person_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "participation/";
 
-        axios.post(queryLink)
+        axios.post(queryLink, {person_id, event_id})
             .then(res => {
                 console.log(res);
 
-                getEventPartAction(event_id);
-                getPartEventsAction(person_id);
-
-                dispatch({type: 'JOIN_EVENT'});
+                dispatch(getEventPartAction(event_id));
+                dispatch(getPartEventsAction(person_id));
+                dispatch({type: 'JOIN_EVENT', found: false});
             })
         }    
 }
@@ -132,6 +131,7 @@ import {getAuthorEventsAction} from './userReducerActions'
 export const deleteEventAction = (id, author_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/" + id;
+        console.log(id, author_id);
 
         axios.delete(queryLink)
             .then(res => {
@@ -149,6 +149,8 @@ export const addEventAction = (event) => {
 
         axios.post(queryLink, event)
             .then(res => {
+
+                dispatch(joinEventAction(event.id, event.author_id));
                 dispatch(getAuthorEventsAction(event.author_id));
                 dispatch({type: 'ADD_EVENT'});
             })

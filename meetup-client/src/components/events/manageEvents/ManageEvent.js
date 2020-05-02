@@ -18,6 +18,7 @@ class ManageEvent extends Component {
 
     handleDelete = (e) => {
         //FIX ME: no author_id bug
+        console.log(this.props.event);
         this.props.deleteEventAction(this.props.event.id, this.props.event.author_id);
     }
 

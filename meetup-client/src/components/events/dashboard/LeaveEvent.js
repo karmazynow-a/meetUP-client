@@ -9,6 +9,7 @@ class LeaveEvent extends Component {
         //reduver to leave event
         console.log("leaving", this.props.event_id, this.props.person_id)
         this.props.leaveEventAction(this.props.event_id, this.props.person_id);
+        
         this.props.history.push("/");
     }
 

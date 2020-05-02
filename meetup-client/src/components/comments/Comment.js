@@ -5,7 +5,6 @@ import {deleteCommentAction} from '../../store/actions/eventReducerActions'
 class Comment extends Component {
 
     handleClick = (e) => {
-        //FIX ME comment should has also event id
         console.log("deleting", this.props.comment.id, ' from event ', this.props.comment.event_id);
         this.props.deleteCommentAction(this.props.comment.id, this.props.comment.event_id);
     }

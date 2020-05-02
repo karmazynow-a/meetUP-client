@@ -7,7 +7,6 @@ const CommentList = ({comments}) => {
         return (
             <Comment comment={comment} key={comment.id}/>
         )
-
     })
 
     return (

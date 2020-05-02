@@ -43,7 +43,7 @@ class SignIn extends Component {
                                             <div className="input-field">
                                                 <i className="material-icons prefix">lock_open</i>
                                                 <label htmlFor="password">Password</label>
-                                                <input type="password" id="password" onChange={this.handleChange} />
+                                                <input type="text" id="password" onChange={this.handleChange} />
                                             </div>
                                             <div className="input-field">
                                                 <button className="btn deep-purple lighten-1 waves-effect waves-light">Login</button>

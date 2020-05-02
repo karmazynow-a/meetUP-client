@@ -22,13 +22,12 @@ class FindEvent extends Component {
 
     handleJoin = (e) => {
         e.preventDefault();
-        console.log(this.props);
-        joinEventAction(this.props.event_details.id, this.props.user_id)
+        console.log('join', this.props.event_details.id, this.props.user_id);
+        this.props.joinEventAction(this.props.event_details.id, this.props.user_id)
     }
 
     render() {
-        // FIX ME after event details will return the author_id
-        let joinBtn = (this.props.user_id === this.props.event_details.author_id) ? (
+        let joinBtn = (this.props.user_id !== this.props.event_details.author_id) ? (
             <div className="input-field center">
                 <button onClick={this.handleJoin} className="btn deep-purple lighten-1 waves-effect waves-light">JOIN</button>
             </div>

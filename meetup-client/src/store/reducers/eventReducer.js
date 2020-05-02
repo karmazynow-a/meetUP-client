@@ -40,7 +40,10 @@ const eventReducer = (state = initState, action) => {
         }
     }
     else if (action.type === 'JOIN_EVENT') {
-        return state;
+        return {
+            ...state,
+            isLatestKeyFound: action.found
+        }
     }
     else if (action.type === 'DELETE_EVENT') {
         return state;
