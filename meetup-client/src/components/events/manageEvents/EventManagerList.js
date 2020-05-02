@@ -1,14 +1,12 @@
 import React from 'react'
 
-import EventSummary from './EventSummary'
-import EmptyEvent from './EmptyEvent'
+import ManageEvent from './ManageEvent'
+import EmptyEvent from '../EmptyEvent'
 
-
-const EventList = ({events}) => {
-
+const EventManagerList = ({events}) => {
     var outputEvents = events && events.map(event => {
         return (
-            <EventSummary event={event} key={event.id}/>
+            <ManageEvent event={event} key={event.id}/>
         )
     })
 
@@ -21,4 +19,4 @@ const EventList = ({events}) => {
     )
 }
 
-export default EventList;
+export default EventManagerList;

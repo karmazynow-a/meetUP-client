@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {findEventAction, joinEventAction} from '../../store/actions/eventReducerActions'
+import {findEventAction, joinEventAction} from '../../../store/actions/eventReducerActions'
 
 class FindEvent extends Component {
     state = {

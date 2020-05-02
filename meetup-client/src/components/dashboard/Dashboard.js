@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import EventList from '../events/EventList'
-import FindEvent from '../events/FindEvent'
-import LoginError from './LoginError'
+import EventList from '../events/dashboard/EventList'
+import FindEvent from '../events/dashboard/FindEvent'
+import LoginError from '../authentication/LoginError'
 import {connect} from 'react-redux'
 import {getPartEventsAction} from '../../store/actions/userReducerActions'
 

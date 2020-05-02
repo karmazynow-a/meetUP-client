@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {leaveEventAction} from '../../store/actions/eventReducerActions'
+import {leaveEventAction} from '../../../store/actions/eventReducerActions'
 
 
 class LeaveEvent extends Component {

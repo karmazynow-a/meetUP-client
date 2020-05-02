@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-import EventSummary from './EventSummary'
-import ParticipantList from './participants/ParticipantList'
-import CommentList from './comments/CommentList'
-import CreateComment from './comments/CreateComment'
+import EventSummary from '../EventSummary'
+import ParticipantList from '../../participants/ParticipantList'
+import CommentList from '../../comments/CommentList'
+import CreateComment from '../../comments/CreateComment'
 import {connect} from 'react-redux'
-import {getEventDetailsAction, getEventPartAction, getEventCommAction} from '../../store/actions/eventReducerActions'
+import {getEventDetailsAction, getEventPartAction, getEventCommAction} from '../../../store/actions/eventReducerActions'
 import LeaveEvent from './LeaveEvent'
 
 // wrapper for CreateComment

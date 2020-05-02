@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {addCommAction} from '../../../store/actions/eventReducerActions'
+import {addCommAction} from '../../store/actions/eventReducerActions'
 import moment from 'moment'
 
 

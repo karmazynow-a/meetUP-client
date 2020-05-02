@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import EventManagerList from '../events/EventManagerList'
-import CreateEvent from '../events/CreateEvent'
+import EventManagerList from '../events/manageEvents/EventManagerList'
+import CreateEvent from '../events/manageEvents/CreateEvent'
 import {connect} from 'react-redux'
 import {getAuthorEventsAction} from '../../store/actions/userReducerActions'
-import LoginError from './LoginError'
+import LoginError from '../authentication/LoginError'
 
 class AddEventSection extends Component {
     state = {
