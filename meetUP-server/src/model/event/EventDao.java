@@ -1,6 +1,7 @@
 package model.event;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EventDao {
      
@@ -9,4 +10,5 @@ public interface EventDao {
     public int save(Event event);
     public int update(Event event);
     public int delete(Integer id);
+    public List<Map<String, Object>> getEventByPersonID(int id);
 }

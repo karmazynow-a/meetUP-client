@@ -38,41 +38,18 @@ public class ParticipationDaoImpl implements ParticipationDao {
 		
 		return pps;
 	}
-
-	@Override
-	public List<Participation> getParticipationByPersonID(Integer id) {
-		List<Participation> pps = new ArrayList<Participation>();
-		String query = "SELECT person_id, event_id FROM participation WHERE person_id=?";
-		jdbcTemplate = new JdbcTemplate(dataSource);
-		
-		List<Map<String, Object>> ppRows = jdbcTemplate.queryForList(query, id);
-		for(Map<String, Object> ppRow : ppRows) {
-			Participation pp = new Participation (
-					Integer.parseInt(String.valueOf(ppRow.get("person_id"))),
-					Integer.parseInt(String.valueOf(ppRow.get("event_id")))
-					);
-			pps.add(pp);
-		}
-		
-		return pps;
-	}
 	
-	@Override
-	public List<Participation> getParticipationByEventID(Integer id) {
-		List<Participation> pps = new ArrayList<Participation>();
-		String query = "SELECT person_id, event_id FROM participation WHERE event_id=?";
+	// get all participants of event
+	public List<Map<String, Object>> getParticipationByEventID(Integer id) {
+		String query = "SELECT p.lname, p.fname FROM participation r "
+				+ "JOIN person p ON p.id=r.person_id "
+				+ "WHERE r.event_id=?";
+		
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		
 		List<Map<String, Object>> ppRows = jdbcTemplate.queryForList(query, id);
-		for(Map<String, Object> ppRow : ppRows) {
-			Participation pp = new Participation (
-					Integer.parseInt(String.valueOf(ppRow.get("person_id"))),
-					Integer.parseInt(String.valueOf(ppRow.get("event_id")))
-					);
-			pps.add(pp);
-		}
 		
-		return pps;
+		return ppRows;
 	}
 
 	@Override

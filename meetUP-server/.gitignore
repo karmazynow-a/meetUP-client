@@ -1,5 +1,5 @@
 ## OWN
-./WebContent/WEB-INF/spring/myapp-config.xml
+./*myapp-config.xml
 
 /target/
 !.mvn/wrapper/maven-wrapper.jar

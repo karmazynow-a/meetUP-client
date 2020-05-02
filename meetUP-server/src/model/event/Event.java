@@ -5,13 +5,15 @@ public class Event {
 	private String name;
 	private String date;
 	private String key;
+	private Integer author_id;
 	
 	public Event() {}
-	public Event(Integer id, String name, String date, String key) {
+	public Event(Integer id, String name, String date, String key, Integer author_id) {
 		this.id = id;
 		this.name = name;
 		this.date = date;
 		this.key = key;
+		this.setAuthor_id(author_id);
 	}
 	
 	public Integer getId() {return id;}
@@ -22,5 +24,7 @@ public class Event {
 	public void setDate(String date) {this.date = date;}
 	public String getKey() {return key;}
 	public void setKey(String key) {this.key = key;}
+	public Integer getAuthor_id() {return author_id;}
+	public void setAuthor_id(Integer author_id) {this.author_id = author_id;}
 
 }

@@ -1,6 +1,7 @@
 package spring;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,9 +49,9 @@ public class RestJDBC {
 		return commentDao.getCommentByID(id);
 	}
 	
-	@RequestMapping(value = "/comment_event/{id}", method = RequestMethod.GET)
-	public @ResponseBody List<Comment> getCommentByEvent(@PathVariable int id) {
-		return commentDao.getCommentByEvent(id);
+	@RequestMapping(value = "/comment/event/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<Map<String, Object>> getCommentByEvent(@PathVariable int id) {
+		return commentDao.getCommentByEventId(id);
 	}
 	
 	@RequestMapping(value = "/comment/{id}", method = RequestMethod.DELETE)
@@ -79,6 +80,21 @@ public class RestJDBC {
 		return eventDao.getEventByID(id);
 	}
 	
+	@RequestMapping(value = "/event/details/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<Map<String, Object>> getEventDetailsById(@PathVariable int id) {
+		return eventDao.getEventDetailsByID(id);
+	}
+	
+	@RequestMapping(value = "/event/author/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<Map<String, Object>> getEventByAuthorId(@PathVariable int id) {
+		return eventDao.getEventByAuthorID(id);
+	}
+	
+	@RequestMapping(value = "/event/person/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<Map<String, Object>> getEventByPersonId(@PathVariable int id) {
+		return eventDao.getEventByPersonID(id);
+	}
+	
 	@RequestMapping(value = "/event/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody int deleteEvent(@PathVariable int id) {
 		return eventDao.delete(id);
@@ -100,14 +116,9 @@ public class RestJDBC {
 		return participationDao.getParticipation();
 	}
 	
-	@RequestMapping(value = "/participation_event/{id}", method = RequestMethod.GET)
-	public @ResponseBody List<Participation> getPpsByEventId(@PathVariable int id) {
+	@RequestMapping(value = "/participation/event/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<Map<String, Object>> getPpsByEventId(@PathVariable int id) {
 		return participationDao.getParticipationByEventID(id);
-	}
-	
-	@RequestMapping(value = "/participation_person/{id}", method = RequestMethod.GET)
-	public @ResponseBody List<Participation> getPpsByPersonId(@PathVariable int id) {
-		return participationDao.getParticipationByPersonID(id);
 	}
 	
 	@RequestMapping(value = "/participation/{person_id}/{event_id}", method = RequestMethod.DELETE)
@@ -129,6 +140,11 @@ public class RestJDBC {
 	@RequestMapping(value = "/person/{id}", method = RequestMethod.GET)
 	public @ResponseBody Person getPersonById(@PathVariable int id) {
 		return personDao.getPersonByID(id);
+	}
+	
+	@RequestMapping(value = "/person/email/{email}", method = RequestMethod.GET)
+	public @ResponseBody Person getPersonById(@PathVariable String email) {
+		return personDao.getPersonByEmail(email);
 	}
 	
 	@RequestMapping(value = "/person/{id}", method = RequestMethod.DELETE)

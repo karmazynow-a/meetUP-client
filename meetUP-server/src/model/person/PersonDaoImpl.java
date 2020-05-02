@@ -26,14 +26,16 @@ public class PersonDaoImpl implements PersonDao {
 	@Override
 	public List<Person> getPerson() {
 		List<Person> ppl = new ArrayList<Person>();
-		String query = "SELECT id, nickname, password FROM person";
+		String query = "SELECT id, fname, lname, email, password FROM person";
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> pplRows = jdbcTemplate.queryForList(query);
 		
 		for(Map<String, Object> pplRow : pplRows) {
 			Person person = new Person (
 					Integer.parseInt(String.valueOf(pplRow.get("id"))),
-					String.valueOf(pplRow.get("nickname")),
+					String.valueOf(pplRow.get("lname")),
+					String.valueOf(pplRow.get("fname")),
+					String.valueOf(pplRow.get("email")),
 					String.valueOf(pplRow.get("password"))
 					);
 			ppl.add(person);
@@ -44,23 +46,29 @@ public class PersonDaoImpl implements PersonDao {
 
 	@Override
 	public Person getPersonByID(Integer id) {
-		String query = "SELECT id, nickname, password FROM person WHERE id=?";
+		String query = "SELECT id, fname, lname, email, password FROM person WHERE id=?";
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		return jdbcTemplate.queryForObject(query,  new Object[]{id}, new BeanPropertyRowMapper<Person>(Person.class));
+	}
+	
+	public Person getPersonByEmail(String email) {
+		String query = "SELECT id, fname, lname, email, password FROM person WHERE email=?";
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		return jdbcTemplate.queryForObject(query,  new Object[]{email}, new BeanPropertyRowMapper<Person>(Person.class));
 	}
 
 	@Override
 	public int save(Person person) {
-		String query = "INSERT INTO person (nickname, password) VALUES (?, ?)";
+		String query = "INSERT INTO person (fname, lname, email, password) VALUES (?, ?, ?, ?)";
 		jdbcTemplate = new JdbcTemplate(dataSource);
-		return jdbcTemplate.update(query, person.getNickname(), person.getPassword());
+		return jdbcTemplate.update(query, person.getFname(), person.getLname(), person.getEmail(), person.getPassword());
 	}
 
 	@Override
 	public int update(Person person) {
-		String query = "UPDATE person SET nickname=?, password=? WHERE id=?";
+		String query = "UPDATE person SET fname=?, lname=?, email=?, password=? WHERE id=?";
 		jdbcTemplate = new JdbcTemplate(dataSource);
-		return jdbcTemplate.update(query, person.getNickname(), person.getPassword(), person.getId());
+		return jdbcTemplate.update(query, person.getFname(), person.getLname(), person.getEmail(), person.getPassword(), person.getId());
 	}
 
 	@Override

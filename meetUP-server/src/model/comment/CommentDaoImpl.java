@@ -24,7 +24,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public List<Comment> getComment() {
 		List<Comment> comments = new ArrayList<Comment>();
-		String query = "SELECT author_id, event_id, content FROM comment"; 
+		String query = "SELECT id, author_id, event_id, content, date FROM comment"; 
         jdbcTemplate = new JdbcTemplate(dataSource);
         List<Map<String,Object>> commentRows = jdbcTemplate.queryForList(query);
 		
@@ -33,7 +33,8 @@ public class CommentDaoImpl implements CommentDao {
         			Integer.parseInt(String.valueOf(commentRow.get("id"))),
         			Integer.parseInt(String.valueOf(commentRow.get("author_id"))),
         			Integer.parseInt(String.valueOf(commentRow.get("event_id"))),
-        			String.valueOf(commentRow.get("content"))
+        			String.valueOf(commentRow.get("content")),
+        			String.valueOf(commentRow.get("date"))
         			);
         	
             comments.add(comment);
@@ -43,45 +44,38 @@ public class CommentDaoImpl implements CommentDao {
 	}
 	
 	@Override
-	public List<Comment> getCommentByEvent(Integer event_id) {
-		List<Comment> comments = new ArrayList<Comment>();
-		String query = "SELECT author_id, event_id, content FROM comment WHERE event_id=?";
-		jdbcTemplate = new JdbcTemplate(dataSource);
-		List<Map<String,Object>> commentRows = jdbcTemplate.queryForList(query, new Object[]{event_id});
+	public List<Map<String, Object>> getCommentByEventId(Integer event_id) {
+		String query = "SELECT c.content, c.date, p.lname AS author_lname, p.fname AS author_fname FROM comment c "
+				+ "JOIN event e ON e.id=c.event_id "
+				+ "JOIN person p ON p.id=c.author_id "
+				+ "WHERE e.id=?";
 		
-        for(Map<String,Object> commentRow : commentRows){
-        	Comment comment = new Comment (
-        			Integer.parseInt(String.valueOf(commentRow.get("id"))),
-        			Integer.parseInt(String.valueOf(commentRow.get("author_id"))),
-        			Integer.parseInt(String.valueOf(commentRow.get("event_id"))),
-        			String.valueOf(commentRow.get("content"))
-        			);
-        	
-            comments.add(comment);
-        }
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		List<Map<String,Object>> commentRows = jdbcTemplate.queryForList(query, new Object[]{event_id});
         
-		return comments;
+		return commentRows;
 	}
 	
 	@Override
 	public Comment getCommentByID(Integer id) {
-		String query = "SELECT author_id, event_id, content FROM comment WHERE id=?";
+		String query = "SELECT id, author_id, event_id, content, date FROM comment WHERE id=?";
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		return jdbcTemplate.queryForObject(query,  new Object[]{id}, new BeanPropertyRowMapper<Comment>(Comment.class));
 	}
 	
 	@Override
 	public int save(Comment comment) {
-		String query = "INSERT INTO comment ( author_id, event_id, content) VALUES (?, ?, ?)" ;
+		String query = "INSERT INTO comment ( author_id, event_id, content, date) VALUES (?, ?, ?, ?)" ;
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		return jdbcTemplate.update(query, comment.getAuthor_id(), comment.getEvent_id(), comment.getContent());
 	}
 	
 	@Override
 	public int update(Comment comment) {
-		String query = "UPDATE comment SET author_id=?, event_id=?, content=? WHERE id=?" ;
+		String query = "UPDATE comment SET author_id=?, event_id=?, content=?, date=? WHERE id=?" ;
 		jdbcTemplate = new JdbcTemplate(dataSource);
-		return jdbcTemplate.update(query, comment.getAuthor_id(), comment.getEvent_id(), comment.getContent(), comment.getId());
+		return jdbcTemplate.update(query, comment.getAuthor_id(), comment.getEvent_id(), comment.getContent(), comment.getDate(), comment.getId());
 	}
 	
 	@Override
