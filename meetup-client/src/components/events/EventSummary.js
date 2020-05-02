@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {NavLink, Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 const EventSummary = ({event}) => {
     return (

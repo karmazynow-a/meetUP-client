@@ -6,7 +6,9 @@ import CommentList from './comments/CommentList'
 import CreateComment from './comments/CreateComment'
 import {connect} from 'react-redux'
 import {getEventDetailsAction, getEventPartAction, getEventCommAction} from '../../store/actions/eventReducerActions'
+import LeaveEvent from './LeaveEvent'
 
+// wrapper for CreateComment
 class AddCommentSection extends Component {
     state = {
         createFormVisible: false,
@@ -40,13 +42,9 @@ class AddCommentSection extends Component {
     }
 }
 
-class EventDetails extends Component {
-    state = {
-        'event': { id: '', name: 'Default name', author_lname: 'Default lname', author_fname: 'Default fname', date: 'Default date'},
-        comments: [{content: 'comm1', date: 'date', author_lname: 'lname', author_fname: 'fname'}, {content: 'comm2', date: 'date', author_lname: 'lname', author_fname: 'fname'}],
-        participants: [{lname:"LN1", fname:"FN1"}, {lname:"LN2", fname:"FN2"}],
-    }
 
+class EventDetails extends Component {
+    
     componentDidMount = () => {
         var id = this.props.match.params.id;
 
@@ -56,8 +54,6 @@ class EventDetails extends Component {
     }
 
     render() {
-        console.log(this.props)
-        console.log(this.state)
         return (
             <div className="dashboard container">
                 <div className="row">
@@ -68,6 +64,7 @@ class EventDetails extends Component {
                         <ParticipantList participants={this.props.participants}/>
                     </div>
                     <div className="col s12 m5 offset-m1">
+                        <LeaveEvent />
                         <AddCommentSection />
                         <CommentList comments={this.props.comments}/>
                     </div>

@@ -3,7 +3,8 @@
 const initState = {
     details: {},
     participants: [],
-    comments: []
+    comments: [],
+    isParticipant: false,
 }
 
 const eventReducer = (state = initState, action) => {
@@ -25,6 +26,31 @@ const eventReducer = (state = initState, action) => {
             comments: action.comments
         }
     }
+    else if (action.type === 'ADD_COMMENT') {
+        return state
+    }
+    else if (action.type === 'DELETE_COMMENT') {
+        return state
+    }
+    else if (action.type === 'FIND_EVENT') {
+        return {
+            ...state,
+            isParticipant: false
+        }
+    }
+    else if (action.type === 'JOIN_EVENT') {
+        return state;
+    }
+    else if (action.type === 'DELETE_EVENT') {
+        return state;
+    }
+    else if (action.type === 'ADD_EVENT') {
+        return state;
+    }
+    else if (action.type === 'EDIT_EVENT') {
+        return state;
+    }
+
 
     return state;
 }

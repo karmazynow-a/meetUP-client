@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
+import {addCommAction} from '../../../store/actions/eventReducerActions'
+import moment from 'moment'
+
 
 class CreateComment extends Component {
     state = {
@@ -13,7 +17,18 @@ class CreateComment extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        console.log(this.props);
+
+        let comment = {
+            author_id: this.props.author_id,
+            event_id: this.props.event_id,
+            content: this.state.content,
+            date: moment().format("YYYY-MM-DD hh:mm:ss")
+        }
+
+        console.log(comment)
+
+        this.props.addCommAction(comment);
     }
 
     render() {
@@ -35,4 +50,18 @@ class CreateComment extends Component {
     }
 }
 
-export default CreateComment;
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        author_id: state.user.userDetails.id,
+        event_id: state.event.details.id
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addCommAction: (comment) => dispatch(addCommAction(comment))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateComment);
