@@ -50,6 +50,12 @@ public class EventDaoImpl implements EventDao{
 		return jdbcTemplate.queryForObject(query,  new Object[]{id}, new BeanPropertyRowMapper<Event>(Event.class));
 	}
 	
+	public Event getEventByKey(String key) {
+		String query = "SELECT id, name, date, key, author_id FROM event WHERE key=?";
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		return jdbcTemplate.queryForObject(query,  new Object[]{key}, new BeanPropertyRowMapper<Event>(Event.class));
+	}
+	
 	@Override
 	public int save(Event event) {
 		String query = "INSERT INTO event (name, date, key, author_id) VALUES (?, ?, ?, ?)";
@@ -61,7 +67,7 @@ public class EventDaoImpl implements EventDao{
 	public int update(Event event) {
 		String query = "UPDATE event SET name=?, date=?, key=?, author_id=? WHERE id=?";
 		jdbcTemplate = new JdbcTemplate(dataSource);
-		return jdbcTemplate.update(query, event.getName(), event.getDate(), event.getKey(), event.getId());
+		return jdbcTemplate.update(query, event.getName(), event.getDate(), event.getKey(), event.getAuthor_id(), event.getId());
 	}
 
 	@Override
@@ -73,7 +79,7 @@ public class EventDaoImpl implements EventDao{
 	
 	// get details of event
 	public List<Map<String, Object>> getEventDetailsByID(int id) {
-		String query = "SELECT e.name, e.date, e.key, p.lname, p.fname FROM event e "
+		String query = "SELECT e.name, e.date, e.key, p.lname AS author_lname, p.fname AS author_fname FROM event e "
 				+ "JOIN person p ON p.id=e.author_id "
 				+ "WHERE e.id=?";
 			

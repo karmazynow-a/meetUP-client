@@ -7,5 +7,5 @@
 * cascade deleting from db
 * reorganize components
 * responses from db
-
+* block removing yourself from your event
 * create user

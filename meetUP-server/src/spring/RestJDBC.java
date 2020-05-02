@@ -80,6 +80,11 @@ public class RestJDBC {
 		return eventDao.getEventByID(id);
 	}
 	
+	@RequestMapping(value = "/event/key/{key}", method = RequestMethod.GET)
+	public @ResponseBody Event getEventByKey(@PathVariable String key) {
+		return eventDao.getEventByKey(key);
+	}
+	
 	@RequestMapping(value = "/event/details/{id}", method = RequestMethod.GET)
 	public @ResponseBody List<Map<String, Object>> getEventDetailsById(@PathVariable int id) {
 		return eventDao.getEventDetailsByID(id);
@@ -142,7 +147,7 @@ public class RestJDBC {
 		return personDao.getPersonByID(id);
 	}
 	
-	@RequestMapping(value = "/person/email/{email}", method = RequestMethod.GET)
+	@RequestMapping(value = "/person/email/{email}/", method = RequestMethod.GET)
 	public @ResponseBody Person getPersonById(@PathVariable String email) {
 		return personDao.getPersonByEmail(email);
 	}
