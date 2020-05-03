@@ -1,9 +1,13 @@
 # TODO
+
+* JNDI -> JPA
+* responses from db
+* block removing yourself from your event
+* block from accessing events by id that user is not signed in
+* check is user is logged in
+
 * polish and english
 * validate forms
-* check is user is logged in
 * cascade deleting from db
-* responses from db
 * dates are kinda broken
-
-* author_id in event/person{id}
+* disappering cards animation

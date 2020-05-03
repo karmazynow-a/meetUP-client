@@ -79,7 +79,7 @@ public class EventDaoImpl implements EventDao{
 	
 	// get details of event
 	public List<Map<String, Object>> getEventDetailsByID(int id) {
-		String query = "SELECT e.name, e.date, e.key, p.lname AS author_lname, p.fname AS author_fname FROM event e "
+		String query = "SELECT e.name, e.date, e.key, e.author_id, p.lname AS author_lname, p.fname AS author_fname FROM event e "
 				+ "JOIN person p ON p.id=e.author_id "
 				+ "WHERE e.id=?";
 			
@@ -100,7 +100,7 @@ public class EventDaoImpl implements EventDao{
 	
 	// get all events that one is participant
 	public List<Map<String, Object>> getEventByPersonID(int id) {
-		String query = "SELECT e.id, e.name, e.date, p.lname AS author_lname, p.fname AS author_fname FROM participation r "
+		String query = "SELECT e.id, e.name, e.date, e.author_id, p.lname AS author_lname, p.fname AS author_fname FROM participation r "
 				+ "JOIN event e ON e.id=r.event_id JOIN person p ON p.id=e.author_id "
 				+ "WHERE r.person_id=?";
 		
