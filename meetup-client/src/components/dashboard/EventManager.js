@@ -17,8 +17,15 @@ class AddEventSection extends Component {
         });
     }
 
+    closeForm = () => {
+        this.setState({
+            ...this.state,
+            createFormVisible : false,
+        })
+    }
+
     render() {
-        return (
+        return  (
             <div className="section">
                 <div className="card">
                     <div className="card-content grey-text text-darken-3">
@@ -32,8 +39,7 @@ class AddEventSection extends Component {
                         </div>
                     </div>
                 </div>
-                {this.state.createFormVisible ? <CreateEvent /> : ''}
-
+                {this.state.createFormVisible ? <CreateEvent close_form={this.close_form}/> : ""}
             </div>
         )
 

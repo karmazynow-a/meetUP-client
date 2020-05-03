@@ -98,6 +98,7 @@ import {getPartEventsAction} from './userReducerActions'
 export const joinEventAction = (event_id, person_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "participation/";
+        console.log('joining', event_id, person_id);
 
         axios.post(queryLink, {person_id, event_id})
             .then(res => {
@@ -157,7 +158,6 @@ export const addEventAction = (event) => {
         }    
 }
 
-//FIXME: db put gives 500
 export const editEventAction = (event) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/";

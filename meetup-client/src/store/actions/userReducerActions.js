@@ -26,6 +26,25 @@ export const authAction = (credentials) => {
     }
 }
 
+export const editUserAction = (credentials) => {
+    return (dispatch, getState) => {
+        let dbAuthlink = config.dblink + 'person/';
+
+        axios.put(dbAuthlink, credentials)
+            .then(res => {
+                console.log(res.status);
+
+                //login the user
+                dispatch(authAction({
+                    email: credentials.email,
+                    password: credentials.password
+                }));
+
+                dispatch({ type: 'UPDATE_USER' });
+            })
+    }
+}
+
 export const signupAction = (credentials) => {
     return (dispatch, getState) => {
         let dbAuthlink = config.dblink + 'person/';

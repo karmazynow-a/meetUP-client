@@ -28,6 +28,7 @@ class CreateEvent extends Component {
         }
 
         this.props.addEventAction(event);
+        this.props.close_form();
     }
 
     generateKey = (e) => {

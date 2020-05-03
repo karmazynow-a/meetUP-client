@@ -17,7 +17,6 @@ class CreateComment extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.props);
 
         let comment = {
             author_id: this.props.author_id,
