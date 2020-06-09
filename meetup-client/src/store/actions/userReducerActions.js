@@ -6,6 +6,7 @@ export const authAction = (credentials) => {
         let dbAuthlink = config.dblink + 'person/email/' + credentials.email + "/";
         axios.get(dbAuthlink)
             .then(res => {
+                console.log(res);
                 if(res.status === 200){
                     if (res.data.password === credentials.password){
 
