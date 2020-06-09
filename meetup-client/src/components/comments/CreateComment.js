@@ -49,7 +49,6 @@ class CreateComment extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         author_id: state.user.userDetails.id,
         event_id: state.event.details.id

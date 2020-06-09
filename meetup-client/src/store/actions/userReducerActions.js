@@ -6,15 +6,14 @@ export const authAction = (credentials) => {
         let dbAuthlink = config.dblink + 'person/email/' + credentials.email + "/";
         axios.get(dbAuthlink)
             .then(res => {
-                console.log(res);
                 if(res.status === 200){
-                    if (res.data.password === credentials.password){
+                    if (res.data[4] === credentials.password){
 
                         let userDetails = {
-                            id: ""+res.data.id,
-                            lname: res.data.lname,
-                            fname: res.data.fname,
-                            email: res.data.email,
+                            id: ""+res.data[0],
+                            lname: res.data[2],
+                            fname: res.data[1],
+                            email: res.data[3],
                         }
 
                         dispatch({type: 'AUTH_USER', userDetails: userDetails});
@@ -74,11 +73,19 @@ export const logoutAction = () => {
 export const getPartEventsAction = (id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/person/" + id;
-
         axios.get(queryLink)
             .then(res => {
+                var eventList = []
+                for (var e of res.data) {
+                    eventList.push({
+                        id : e[0],
+                        name : e[1],
+                        date : e[2],
+                        key : e[3],
+                    })
+                }
 
-                dispatch({type: 'PERSON_EVENTS', events: res.data});
+                dispatch({type: 'PERSON_EVENTS', events: eventList});
             });
     }
 }
@@ -89,8 +96,26 @@ export const getAuthorEventsAction = (id) => {
 
         axios.get(queryLink)
             .then(res => {
+                console.log(res)
+                var eventList = []
+                for (var e of res.data) {
+                    eventList.push({
+                        id : e[0],
+                        name : e[1],
+                        date : e[2],
+                        author_id : e[3],
+                        author_lname : e[4],
+                        author_fname : e[5],
+                    })
+                }
 
-                dispatch({type: 'AUTHOR_EVENTS', events: res.data});
+                dispatch({type: 'AUTHOR_EVENTS', events: eventList});
             })
         }
+}
+
+export const loadingAction = () => {
+    return (dispatch, getState) => {
+        dispatch({type: 'IS_LOADING'});
+    }
 }

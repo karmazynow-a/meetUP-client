@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import LoginError from '../authentication/LoginError'
 import {editUserAction} from '../../store/actions/userReducerActions'
 
 
@@ -34,7 +35,7 @@ class EditAccount extends Component {
     }
 
     render() {
-        return (
+        return this.props.isAuth ? (
             <div className="container">
                 <div className="section">
                     <div className="row">
@@ -65,13 +66,14 @@ class EditAccount extends Component {
                     </div>
                 </div>
             </div>
-        )
+        ) : ( <LoginError /> )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-       person: state.user.userDetails,
+        isAuth: state.user.isAuth,
+        person: state.user.userDetails,
     }
 }
 

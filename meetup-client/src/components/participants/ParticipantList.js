@@ -6,7 +6,7 @@ const ParticipantList = ({participants}) => {
 
     var outputParticipants = participants && participants.map(participant => {
         return (
-            <Participant participant={participant}/>
+            <Participant participant={participant} key={Math.random()}/>
         )
     })
 

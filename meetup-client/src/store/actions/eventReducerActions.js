@@ -8,8 +8,17 @@ export const getEventDetailsAction = (id) => {
 
         axios.get(queryLink)
             .then(res => {
-                let res_data = { ...res.data[0], id: id }
-                dispatch({type: 'EVENT_DETAILS', event_details: res_data});
+                let res_data = res.data[0]
+                var eventData = {
+                    id : id,
+                    name : res_data[0],
+                    date : res_data[1],
+                    key : res_data[2],
+                    author_lname : res_data[4],
+                    author_fname : res_data[5]
+                }
+                
+                dispatch({type: 'EVENT_DETAILS', event_details: eventData});
             })
         }
 }
@@ -20,7 +29,16 @@ export const getEventPartAction = (id) => {
 
         axios.get(queryLink)
             .then(res => {
-                dispatch({type: 'EVENT_PART', participants: res.data});
+
+                var partList = []
+                for (var e of res.data) {
+                    partList.push({
+                        lname : e[0],
+                        fname : e[1]
+                    })
+                }
+
+                dispatch({type: 'EVENT_PART', participants: partList});
             })
         }
 }
@@ -31,7 +49,20 @@ export const getEventCommAction = (id) => {
 
         axios.get(queryLink)
             .then(res => {
-                dispatch({type: 'EVENT_COMMENT', comments: res.data});
+                var comentList = []
+                for (var e of res.data) {
+                    comentList.push({
+                        content : e[0],
+                        date : e[1],
+                        id : e[2],
+                        event_id : e[3],
+                        author_id : e[4],
+                        author_lname : e[5],
+                        author_fname : e[6],
+                    })
+                }
+
+                dispatch({type: 'EVENT_COMMENT', comments: comentList});
             })
             .catch(error => {
                 console.log("No comments found!")
@@ -111,13 +142,17 @@ export const joinEventAction = (event_id, person_id) => {
         }    
 }
 
-//FIXME db issues
+
 export const leaveEventAction = (event_id, person_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "participation/" + person_id + "/" + event_id;
         axios.delete(queryLink)
             .then(res => {
-                console.log(res);
+                console.log("Leave", res);
+                if (res.data === -1) {
+                    alert("You cannot leave own event!");
+                    return;
+                }
 
                 dispatch(getEventPartAction(event_id));
                 dispatch(getPartEventsAction(person_id));
@@ -150,8 +185,7 @@ export const addEventAction = (event) => {
 
         axios.post(queryLink, event)
             .then(res => {
-
-                dispatch(joinEventAction(event.id, event.author_id));
+                dispatch(joinEventAction(res.data, event.author_id));
                 dispatch(getAuthorEventsAction(event.author_id));
                 dispatch({type: 'ADD_EVENT'});
             })

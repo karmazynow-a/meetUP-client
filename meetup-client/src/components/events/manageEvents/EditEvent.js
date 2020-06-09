@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import DatePicker from "react-datepicker"
 import {editEventAction} from '../../../store/actions/eventReducerActions'
 import moment from 'moment'
+import "react-datepicker/dist/react-datepicker.css"
 
 class EditEvent extends Component {
     state = {
         name: '',
         date: '',
-        time: '',
         key: ''
     }
 
     componentDidMount = () => {
+        var eventDate = new Date(moment(this.props.event.date).format("YYYY-MM-DDTHH:MM"))
+        console.log(eventDate)
         this.setState({
             name: this.props.event.name,
             key: this.props.event.key,
-            date: moment(this.props.event.date).format("DD:MM:YYYY"),
-            time: moment(this.props.event.date).format("HH:MM")
+            date: eventDate,
         })
     }
 
@@ -26,16 +28,24 @@ class EditEvent extends Component {
         })
     }
 
+    handleDateChange = (date) => {
+        this.setState({
+            ...this.state,
+            date
+        })
+    }
+
+
     handleSubmit = (e) => {
         e.preventDefault();
-        let date = this.state.date + ' ' + this.state.time
+        var formatedDate = moment(this.state.date).format("DD-MM-YYYY HH:MM")
 
         let event = {
             id: this.props.event.id,
             name: this.state.name, 
             key: this.state.key,
             author_id: this.props.author_id,
-            date: date
+            date: formatedDate
         }
 
         this.props.editEventAction(event);
@@ -65,11 +75,8 @@ class EditEvent extends Component {
                         </div>
                         <div className="input-field">
                             <label htmlFor="date" className={(this.state.key === "") ? "" : "active"}>Date</label>
-                            <input type="date" id="date" onChange={this.handleChange} value={this.state.date} />
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="time" className={(this.state.key === "") ? "" : "active"}>Hour</label>
-                            <input type="time" id="time" onChange={this.handleChange} value={this.state.time} />
+                            <DatePicker id="date" onChange={this.handleDateChange} selected={this.state.date} showTimeSelect timeFormat="HH:mm"
+                                    timeIntervals={15} timeCaption="time" dateFormat="dd-MM-yyyy HH:mm"/>
                         </div>
                         <div className="input-field">
                             <button className="btn deep-purple lighten-1 waves-effect waves-light">Save</button>

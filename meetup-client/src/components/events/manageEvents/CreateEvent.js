@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import DatePicker from "react-datepicker"
+import moment from 'moment'
 import {addEventAction} from '../../../store/actions/eventReducerActions'
+import "react-datepicker/dist/react-datepicker.css"
 
 class CreateEvent extends Component {
     state = {
         name: '',
         date: '',
-        time: '',
         key: ''
     }
 
@@ -16,15 +18,23 @@ class CreateEvent extends Component {
         })
     }
 
+    handleDateChange = (date) => {
+        this.setState({
+            ...this.state,
+            date
+        })
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
-        let date = this.state.date + ' ' + this.state.time
+
+        var formatedDate = moment(this.state.date).format("DD-MM-YYYY HH:MM")
 
         let event = {
             name: this.state.name, 
             key: this.state.key,
             author_id: this.props.author_id,
-            date: date
+            date: formatedDate
         }
 
         this.props.addEventAction(event);
@@ -54,11 +64,8 @@ class CreateEvent extends Component {
                         </div>
                         <div className="input-field">
                             <label htmlFor="date">Date</label>
-                            <input type="date" id="date" onChange={this.handleChange} value="" />
-                        </div>
-                        <div className="input-field">
-                            <label htmlFor="time">Hour</label>
-                            <input type="time" id="time" onChange={this.handleChange} />
+                            <DatePicker id="date" onChange={this.handleDateChange} selected={this.state.date} showTimeSelect timeFormat="HH:mm"
+                                    timeIntervals={15} timeCaption="time" dateFormat="dd MM yyyy HH:mm"/>
                         </div>
                         <div className="input-field">
                             <button className="btn deep-purple lighten-1 waves-effect waves-light">Create event</button>

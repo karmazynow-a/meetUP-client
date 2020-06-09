@@ -1,12 +1,12 @@
 # TODO
 
+* validate forms
+* add error messages for removing yourself from your event and wrong password
+* loading
 * responses from db
-* block removing yourself from your event
-* block from accessing events by id that user is not signed in
 * check is user is logged in
+* block from accessing events by id that user is not signed in - chyba się nie da xd
 
 * polish and english
-* validate forms
 * cascade deleting from db
-* dates are kinda broken
 * disappering cards animation

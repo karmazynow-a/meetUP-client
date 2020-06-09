@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {authAction} from '../../store/actions/userReducerActions'
+import {authAction, loadingAction} from '../../store/actions/userReducerActions'
+import LoadingScreen from '../layout/LoadingScreen'
 
 class SignIn extends Component {
     state = {
@@ -17,16 +18,18 @@ class SignIn extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
+        this.props.loadingAction();
         this.props.authAction(this.state);
         
         this.props.history.push("/");
     }
 
     render() {
+        console.log("render", this.props.isLoading)
         if (this.props.isAuth) { this.props.history.push("/") }
         else {
-            return (
+            return this.props.isLoading ? <LoadingScreen/>
+                :(
                 <div className="container">
                     <div className="section">
                         <div className="row">
@@ -64,13 +67,15 @@ class SignIn extends Component {
 const mapStateToProps = (state) => {
     return {
         isAuth: state.user.isAuth,
+        isLoading: state.user.isLoading,
         userDetails: state.user.userDetails
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        authAction: (credentials) => dispatch(authAction(credentials))
+        authAction: (credentials) => dispatch(authAction(credentials)),
+        loadingAction: () => dispatch(loadingAction())
     }
 }
 

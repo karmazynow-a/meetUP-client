@@ -15,11 +15,10 @@ Also you will need extra libraries:
 After downloading the *.jar files put them inside `meetUP-server/WebContent/WEB-INF/lib/`.
 
 ### Client
+To install client app use:
 
-
-#### How to install?
-
-    nmp install
+    npm install
+    npm start
 
 
 ## Technologies

@@ -7,6 +7,7 @@ import CreateComment from '../../comments/CreateComment'
 import {connect} from 'react-redux'
 import {getEventDetailsAction, getEventPartAction, getEventCommAction} from '../../../store/actions/eventReducerActions'
 import LeaveEvent from './LeaveEvent'
+import LoginError from '../../authentication/LoginError'
 
 // wrapper for CreateComment
 class AddCommentSection extends Component {
@@ -55,13 +56,13 @@ class EventDetails extends Component {
     componentDidMount = () => {
         var id = this.props.match.params.id;
 
-        this.props.getEventDetailsAction(id);
         this.props.getEventPartAction(id);
+        this.props.getEventDetailsAction(id);
         this.props.getEventCommAction(id);
     }
 
     render() {
-        return (
+        return this.props.isAuth ? (
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m6">
@@ -77,12 +78,13 @@ class EventDetails extends Component {
                     </div>
                 </div>
             </div>
-        )
+        ) : <LoginError/>
     }
 }
 
 const mapStateToProps = (state) => {
     return {
+        isAuth: state.user.isAuth,
         person_id: state.user.userDetails.id,
         details: state.event.details,
         participants: state.event.participants,

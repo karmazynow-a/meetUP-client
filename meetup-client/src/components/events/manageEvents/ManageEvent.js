@@ -9,7 +9,6 @@ class ManageEvent extends Component {
     }
 
     handleEdit = (e) => {
-        console.log('edit', this.props.event.id);
         this.setState({
             ...this.state,
             showForm: true
