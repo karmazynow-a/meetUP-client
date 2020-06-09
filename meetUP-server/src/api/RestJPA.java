@@ -55,9 +55,15 @@ public class RestJPA {
     @GET
     @Path("/person/email/{email}")
     @Produces({MediaType.APPLICATION_JSON})
-	public List<Person> getPersonByEmail(@PathParam("email") String email) {
+	public Object getPersonByEmail(@PathParam("email") String email) {
     	String query = "SELECT p.id, p.fname, p.lname, p.email, p.password FROM Person p WHERE p.email= :email";
-		return (List<Person>) entityManager.createQuery(query, Person.class).setParameter("email", email).getResultList();
+		List people = entityManager.createQuery(query, Person.class).setParameter("email", email).getResultList();
+		System.out.println("List " + people.toString());
+		if (people.isEmpty()) {
+			return new Person();
+		} else {
+			return people.get(0);
+		}
 	}
 	
 	@DELETE
@@ -86,9 +92,9 @@ public class RestJPA {
 	        entityManager.persist(person);
 	        entityManager.flush();
 	        entityTransaction.commit();
-	        return 1;
+	        return person.getId();
 		} catch (Exception ex) {
-			return 0;
+			return -1;
 		}
 	}
 	
@@ -102,9 +108,9 @@ public class RestJPA {
 			entityManager.merge(person);
 	        entityManager.flush();
 	        entityTransaction.commit();
-	        return 1;
+	        return person.getId();
 		} catch (Exception ex) {
-			return 0;
+			return -1;
 		}
 	}
 	
@@ -164,9 +170,9 @@ public class RestJPA {
 	        entityManager.persist(comment);
 	        entityManager.flush();
 	        entityTransaction.commit();
-	        return 1;
+	        return comment.getId();
 		} catch (Exception ex) {
-			return 0;
+			return -1;
 		}
 	}
 	
@@ -180,9 +186,9 @@ public class RestJPA {
 			entityManager.merge(comment);
 	        entityManager.flush();
 	        entityTransaction.commit();
-	        return 1;
+	        return comment.getId();
 		} catch (Exception ex) {
-			return 0;
+			return -1;
 		}
 	}
 
@@ -273,9 +279,10 @@ public class RestJPA {
 	        entityManager.persist(event);
 	        entityManager.flush();
 	        entityTransaction.commit();
-	        return 1;
+	        return event.getId();
 		} catch (Exception ex) {
-			return 0;
+			System.out.println(ex.getMessage());
+			return -1;
 		}
 	}
 	
@@ -289,9 +296,9 @@ public class RestJPA {
 			entityManager.merge(event);
 	        entityManager.flush();
 	        entityTransaction.commit();
-	        return 1;
+	        return event.getId();
 		} catch (Exception ex) {
-			return 0;
+			return -1;
 		}
 	}
 	
