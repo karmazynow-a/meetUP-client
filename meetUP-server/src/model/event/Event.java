@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Event implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Integer id;
 	private String name;
 	private String date;
