@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="findEvents", query="SELECT e.id, e.name, e.date, e.key, e.author_id FROM Event e")
 public class Event implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

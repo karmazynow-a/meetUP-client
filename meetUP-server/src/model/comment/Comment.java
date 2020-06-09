@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="findComments", query="SELECT c.id, c.author_id, c.event_id, c.content, c.date FROM Comment c")
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

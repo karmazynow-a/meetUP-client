@@ -1,5 +1,5 @@
 ## OWN
-./*myapp-config.xml
+WebContent/META-INF/context.xml
 
 /target/
 !.mvn/wrapper/maven-wrapper.jar
