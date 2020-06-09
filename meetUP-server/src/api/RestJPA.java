@@ -1,44 +1,123 @@
-package spring;
+package api;
 
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import model.comment.Comment;
-import model.comment.CommentDaoImpl;
 import model.event.Event;
-import model.event.EventDaoImpl;
 import model.participation.Participation;
-import model.participation.ParticipationDaoImpl;
 import model.person.Person;
-import model.person.PersonDaoImpl;
 
-
-@Controller(value = "JdbcController")
-@RequestMapping("/rest")
-public class RestJDBC {
+@Path("/rest")
+public class RestJPA {
 	
-	@Autowired
-	CommentDaoImpl commentDao;
+    private EntityManagerFactory managerFactory; 
+    private EntityManager entityManager;
+    private EntityTransaction entityTransaction;
+    
+    public RestJPA() {
+        managerFactory = Persistence.createEntityManagerFactory("PU_Postgresql");
+        entityManager = managerFactory.createEntityManager();
+        entityTransaction = entityManager.getTransaction(); 
+    }
+    
+	/*** PERSON MAPPING ***/
+    
+    @GET
+    @Path("/person")
+    @Produces({MediaType.APPLICATION_JSON})
+	public List<Person> getAllPeople() {
+    	List<Person> people = null;
+    	try {
+            @SuppressWarnings("unchecked")
+            List<Person> resultList = (List<Person>) entityManager.createNamedQuery("findPeople").getResultList();
+            people = resultList;
+        } catch (Exception e) {
+            System.out.println("Failed !!! " + e.getMessage());
+        }
+        return people;//.toArray(new Person[0]);
+	}
+    
+    @GET
+    @Path("/person/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+	public Person getPersonById(@PathParam("id") String id) {
+    	return (Person) entityManager.find(Person.class, Integer.parseInt(id));
+	}
+    
+    @GET
+    @Path("/person/email/{email}")
+    @Produces({MediaType.APPLICATION_JSON})
+	public Person getPersonByEmail(@PathParam("email") String email) {
+    	String sqlQuery = "SELECT id, fname, lname, email, password FROM Person WHERE email= :email";
+		return (Person) entityManager.createQuery(sqlQuery, Person.class).setParameter("email", email).getSingleResult();
+	}
 	
-	@Autowired
-	EventDaoImpl eventDao;
+	@DELETE
+	@Path("/person/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+	public int deletePerson(@PathParam("id") String id) {
+		try {
+			entityTransaction.begin();
+	        Person entity = (Person) entityManager.find(Person.class, Integer.parseInt(id));
+	        entityManager.remove(entity);           
+	        entityManager.flush();
+	        entityTransaction.commit();
+	        return 1;
+		} catch (Exception ex) {
+			return 0;
+		}
+	}
 	
-	@Autowired
-	ParticipationDaoImpl participationDao;
+	@POST
+	@Path("/person")
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public int addPerson(Person person) {
+		try {
+			entityTransaction.begin();
+	        entityManager.persist(person);
+	        entityManager.flush();
+	        entityTransaction.commit();
+	        return 1;
+		} catch (Exception ex) {
+			return 0;
+		}
+	}
 	
-	@Autowired
-	PersonDaoImpl personDao;
+	@PUT
+	@Path("/person")
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+	public int updatePerson(Person person) {
+		try {
+			entityTransaction.begin();
+			entityManager.merge(person);
+	        entityManager.flush();
+	        entityTransaction.commit();
+	        return 1;
+		} catch (Exception ex) {
+			return 0;
+		}
+	}
 	
 	
 	/*** COMMENT MAPPING ***/
+    /*
 	@RequestMapping(value = "/comment", method = RequestMethod.GET)
 	public @ResponseBody List<Comment> getAllComments() {
 		return commentDao.getComment();
@@ -68,8 +147,9 @@ public class RestJDBC {
 	public @ResponseBody int updateComment(@RequestBody Comment comment) {
 		return commentDao.update(comment);
 	}
-	
+	*/
 	/*** EVENT MAPPING ***/
+	/*
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public @ResponseBody List<Event> getAllEvents() {
 		return eventDao.getEvent();
@@ -114,8 +194,10 @@ public class RestJDBC {
 	public @ResponseBody int updateEvent(@RequestBody Event event) {
 		return eventDao.update(event);
 	}
+	*/
 	
 	/*** PARTICIPATION MAPPING ***/
+	/*
 	@RequestMapping(value = "/participation", method = RequestMethod.GET)
 	public @ResponseBody List<Participation> getAllPps() {
 		return participationDao.getParticipation();
@@ -135,36 +217,5 @@ public class RestJDBC {
 	public @ResponseBody int addPp(@RequestBody Participation pp) {
 		return participationDao.save(pp);
 	}
-	
-	/*** PERSON MAPPING ***/
-	@RequestMapping(value = "/person", method = RequestMethod.GET)
-	public @ResponseBody List<Person> getAllPeople() {
-		return personDao.getPerson();
-	}
-	
-	@RequestMapping(value = "/person/{id}", method = RequestMethod.GET)
-	public @ResponseBody Person getPersonById(@PathVariable int id) {
-		return personDao.getPersonByID(id);
-	}
-	
-	@RequestMapping(value = "/person/email/{email}/", method = RequestMethod.GET)
-	public @ResponseBody Person getPersonById(@PathVariable String email) {
-		return personDao.getPersonByEmail(email);
-	}
-	
-	@RequestMapping(value = "/person/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody int deletePerson(@PathVariable int id) {
-		return personDao.delete(id);
-	}
-	
-	@RequestMapping(value = "/person", method = RequestMethod.POST)
-	public @ResponseBody int addPerson(@RequestBody Person person) {
-		return personDao.save(person);
-	}
-	
-	@RequestMapping(value = "/person", method = RequestMethod.PUT)
-	public @ResponseBody int updatePerson(@RequestBody Person person) {
-		return personDao.update(person);
-	}
-	
+	*/
 }

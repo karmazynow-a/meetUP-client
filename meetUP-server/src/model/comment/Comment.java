@@ -1,6 +1,13 @@
 package model.comment;
 
-public class Comment {
+import java.io.Serializable;
+import javax.persistence.*;
+
+@Entity
+public class Comment implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Id
 	private Integer id;
 	private Integer author_id;
 	private Integer event_id;
