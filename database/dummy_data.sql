@@ -1,5 +1,6 @@
 INSERT INTO person (fname, lname, email, password) VALUES 
-    ('user1', 'user1', 'user1@main.com', 'dummypass'),
+    ('Captain', 'America', 'ca@marvel.com', 'dummypass'),
+    ('Iron', 'Man', 'im@marvel.com', 'dummypass'),
     ('Britney', 'Spears', 'britt@iscallin.com', 'dummypass'),
     ('Doja', 'Cat', 'doja@cat.com', 'dummypass'),
     ('Madonna', 'Queen', 'madonnamadonna.com', 'dummypass');

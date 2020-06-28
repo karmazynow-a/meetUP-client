@@ -22,6 +22,12 @@ const userReducer = (state = initState, action) => {
             isAuth: false,
         }
     }
+    else if (action.type === 'RESET_AUTH') {
+        return {
+            ...state,
+            isAuth: null,
+        }
+    }
     else if (action.type === 'NEW_USER') {
         return state
     }

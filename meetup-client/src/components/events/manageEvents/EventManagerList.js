@@ -2,12 +2,14 @@ import React from 'react'
 
 import ManageEvent from './ManageEvent'
 import EmptyEvent from '../EmptyEvent'
+import moment from 'moment'
 
 const EventManagerList = ({events}) => {
     var sortedEvents = events.sort((a,b) => {
-        return new Date(a.date).getTime() - 
-            new Date(b.date).getTime()
-    }).reverse();
+        return moment(a.date, 'DD-MM-YYYY HH:mm') - 
+        moment(b.date, 'DD-MM-YYYY HH:mm')
+    });
+
 
     var outputEvents = sortedEvents && sortedEvents.map(event => {
         return (

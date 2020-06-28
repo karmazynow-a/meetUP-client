@@ -14,6 +14,7 @@ export const getEventDetailsAction = (id) => {
                     name : res_data[0],
                     date : res_data[1],
                     key : res_data[2],
+                    author_id : res_data[3],
                     author_lname : res_data[4],
                     author_fname : res_data[5]
                 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import M from 'materialize-css';
 import {connect} from 'react-redux'
 import LoginError from '../authentication/LoginError'
 import {editUserAction} from '../../store/actions/userReducerActions'
@@ -12,11 +13,34 @@ class EditAccount extends Component {
         email: ''
     }
 
+    validateForm = () => {
+        var formNotValid = false;
+
+        if (!this.state.fname){
+            M.toast({html: 'First name should not be empty!'});
+            formNotValid = true;
+        }
+
+        if (!this.state.lname){
+            M.toast({html: 'Last name should not be empty!'});
+            formNotValid = true;
+        }
+
+        if (!this.state.password){
+            M.toast({html: 'Password should not be empty!'});
+            formNotValid = true;
+        }
+
+        return !formNotValid;
+    }
+
     componentDidMount = () => {
         this.setState({
             ...this.state,
+            id: this.props.person.id,
             fname: this.props.person.fname,
-            lname: this.props.person.lname
+            lname: this.props.person.lname,
+            email: this.props.person.email,
         })
     }
 
@@ -30,8 +54,10 @@ class EditAccount extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        this.props.editUserAction(this.state)
-        this.props.history.push("/");
+        if (this.validateForm()){
+            this.props.editUserAction(this.state)
+            this.props.history.push("/");
+        }
     }
 
     render() {

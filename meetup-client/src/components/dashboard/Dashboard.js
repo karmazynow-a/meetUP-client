@@ -4,6 +4,7 @@ import FindEvent from '../events/dashboard/FindEvent'
 import LoginError from '../authentication/LoginError'
 import {connect} from 'react-redux'
 import {getPartEventsAction} from '../../store/actions/userReducerActions'
+import moment from 'moment'
 
 class Dashboard extends Component {
 
@@ -14,11 +15,13 @@ class Dashboard extends Component {
     }
 
     render(){
+        var incomingEvents = this.props.events.filter( event => moment(event.date, 'DD-MM-YYYY HH:mm') > moment() );
+
         return this.props.isAuth ? (
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m6">
-                        <EventList events={this.props.events}/>
+                        <EventList events={incomingEvents}/>
                     </div>
                     <div className="col s12 m5 offset-m1">
                         <FindEvent/>

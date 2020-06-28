@@ -16,9 +16,7 @@ class ManageEvent extends Component {
     }
 
     handleDelete = (e) => {
-        //FIX ME: no author_id bug
-        console.log(this.props.event);
-        this.props.deleteEventAction(this.props.event.id, this.props.event.author_id);
+        this.props.deleteEventAction(this.props.event.id, this.props.author_id);
     }
 
     edit_done = () => {
@@ -54,10 +52,16 @@ class ManageEvent extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        author_id: state.user.userDetails.id,
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteEventAction: (id, author_id) => dispatch(deleteEventAction(id, author_id))
     }
 }
 
-export default connect(null, mapDispatchToProps)(ManageEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageEvent);

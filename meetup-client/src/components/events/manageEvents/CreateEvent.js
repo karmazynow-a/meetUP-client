@@ -28,7 +28,7 @@ class CreateEvent extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        var formatedDate = moment(this.state.date).format("DD-MM-YYYY HH:MM")
+        var formatedDate = moment(this.state.date).format("DD-MM-YYYY HH:mm")
 
         let event = {
             name: this.state.name, 
@@ -48,6 +48,7 @@ class CreateEvent extends Component {
     }
 
     render() {
+        console.log("date", this.state.date);
         return (
             <div className="card">
                 <div className="card-content center">

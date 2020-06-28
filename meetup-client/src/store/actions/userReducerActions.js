@@ -3,6 +3,8 @@ import {config} from '../../config'
 
 export const authAction = (credentials) => {
     return (dispatch, getState) => {
+        dispatch({type: 'RESET_AUTH'});
+        
         console.log("Sending credentials...");
         let dbAuthlink = config.dblink + 'person/email/' + credentials.email + "/";
         axios.get(dbAuthlink)
@@ -32,33 +34,31 @@ export const authAction = (credentials) => {
 }
 
 export const editUserAction = (credentials) => {
+    console.log("Sending credentials...");
     return (dispatch, getState) => {
         let dbAuthlink = config.dblink + 'person/';
 
         axios.put(dbAuthlink, credentials)
             .then(res => {
-                console.log(res.status);
-
-                //login the user
-                dispatch(authAction({
-                    email: credentials.email,
-                    password: credentials.password
-                }));
-
-                dispatch({ type: 'UPDATE_USER' });
+                if(res.status === 200){
+                    console.log("Success", res);
+                    dispatch({ type: 'UPDATE_USER' });
+                } else {
+                    console.log("Failure...");
+                }
             })
     }
 }
 
 export const signupAction = (credentials) => {
-    console.log("Send credentials...");
+    console.log("Sending credentials...");
     return (dispatch, getState) => {
         let dbAuthlink = config.dblink + 'person/';
 
         axios.post(dbAuthlink, credentials)
             .then(res => {
                 if(res.status === 200){
-                    console.log(res.status);
+                    console.log(res);
 
                     //login the user
                     dispatch(authAction({
@@ -70,10 +70,14 @@ export const signupAction = (credentials) => {
                     console.log("Success");
                 }
                 else {
-                    console.log("Failure... wrong response status");
+                    console.log("Failure... wrong response status", res.status);
                     dispatch({type: 'AUTH_FAILED'});
                 }
             })
+            .catch(error => {
+                console.log("Failure... wrong response status", error.response.status);
+                dispatch({type: 'AUTH_FAILED'});
+            });
     }
 }
 
@@ -89,12 +93,14 @@ export const getPartEventsAction = (id) => {
         axios.get(queryLink)
             .then(res => {
                 var eventList = []
-                for (var e of res.data) {
+                for (var r of res.data) {
                     eventList.push({
-                        id : e[0],
-                        name : e[1],
-                        date : e[2],
-                        key : e[3],
+                        id : r[0],
+                        name : r[1],
+                        date : r[2],
+                        author_id : r[3],
+                        author_lname : r[4],
+                        author_fname : r[5],
                     })
                 }
 
@@ -112,14 +118,12 @@ export const getAuthorEventsAction = (id) => {
         axios.get(queryLink)
             .then(res => {
                 var eventList = []
-                for (var e of res.data) {
+                for (var r of res.data) {
                     eventList.push({
-                        id : e[0],
-                        name : e[1],
-                        date : e[2],
-                        author_id : e[3],
-                        author_lname : e[4],
-                        author_fname : e[5],
+                        id : r[0],
+                        name : r[1],
+                        date : r[2],
+                        key : r[3]
                     })
                 }
 

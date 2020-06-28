@@ -9,16 +9,15 @@ class EditEvent extends Component {
     state = {
         name: '',
         date: '',
-        key: ''
+        key: '',
     }
 
     componentDidMount = () => {
-        var eventDate = new Date(moment(this.props.event.date).format("YYYY-MM-DDTHH:MM"))
-        console.log(eventDate)
+        var formattedDate = moment(this.props.event.date, 'DD-MM-YYYY HH:mm').toDate();
         this.setState({
             name: this.props.event.name,
             key: this.props.event.key,
-            date: eventDate,
+            date: formattedDate,
         })
     }
 
@@ -38,7 +37,8 @@ class EditEvent extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        var formatedDate = moment(this.state.date).format("DD-MM-YYYY HH:MM")
+        var formatedDate = moment(this.state.date).format("DD-MM-YYYY HH:mm")
+        console.log(this.state.date, formatedDate)
 
         let event = {
             id: this.props.event.id,
@@ -52,7 +52,7 @@ class EditEvent extends Component {
         this.props.edit_done();
     }
 
-    generateKey = (e) => {
+    generateKey = () => {
         this.setState({
             key: Math.random().toString(36).substring(5),
         })
@@ -65,7 +65,7 @@ class EditEvent extends Component {
                     <h5 className="card-title center grey-text text-darken-3">Edit event</h5>
                     <form onSubmit={this.handleSubmit} className="white">
                         <div className="input-field">
-                            <label htmlFor="name" className={(this.state.key === "") ? "" : "active"}>Name</label>
+                            <label htmlFor="name" className={(this.state.name === "") ? "" : "active"}>Name</label>
                             <input type="text" id="name" onChange={this.handleChange} value={this.state.name}/>
                         </div>
                         <div className="input-field suffix">
@@ -74,7 +74,7 @@ class EditEvent extends Component {
                             <i className="material-icons" onClick={this.generateKey}>sync</i>
                         </div>
                         <div className="input-field">
-                            <label htmlFor="date" className={(this.state.key === "") ? "" : "active"}>Date</label>
+                            <label htmlFor="date" className={(this.state.date === "") ? "" : "active"}>Date</label>
                             <DatePicker id="date" onChange={this.handleDateChange} selected={this.state.date} showTimeSelect timeFormat="HH:mm"
                                     timeIntervals={15} timeCaption="time" dateFormat="dd-MM-yyyy HH:mm"/>
                         </div>

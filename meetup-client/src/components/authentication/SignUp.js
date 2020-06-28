@@ -61,6 +61,17 @@ class SignUp extends Component {
         }
     }
 
+    componentDidUpdate = () => {
+        if (this.props.isAuth === false && this.state.showErrorMessage) {
+            M.toast({html: 'This e-mail is already in use!'});
+            this.setState(prevState => ({ 
+                ...this.state,
+                isLoading: !prevState.isLoading,
+                showErrorMessage: false,
+            }));
+        }
+    }
+
     render() {
         if (this.props.isAuth) {
             return <Redirect to={{ pathname: '/' }} />
@@ -78,19 +89,19 @@ class SignUp extends Component {
                                         <form onSubmit={this.handleSubmit} className="white">
                                             <div className="input-field">
                                                 <label htmlFor="fname">First name</label>
-                                                <input type="text" id="fname" onChange={this.handleChange} />
+                                                <input type="text" id="fname" onChange={this.handleChange} required/>
                                             </div>
                                             <div className="input-field">
                                                 <label htmlFor="lname">Last name</label>
-                                                <input type="text" id="lname" onChange={this.handleChange} />
+                                                <input type="text" id="lname" onChange={this.handleChange} required/>
                                             </div>
                                             <div className="input-field">
                                                 <label htmlFor="email">E-mail</label>
-                                                <input type="email" id="email" onChange={this.handleChange} />
+                                                <input type="email" id="email" onChange={this.handleChange} required/>
                                             </div>
                                             <div className="input-field">
                                                 <label htmlFor="password">Password</label>
-                                                <input type="password" id="password" onChange={this.handleChange} />
+                                                <input type="password" id="password" onChange={this.handleChange} required/>
                                             </div>
                                             <div className="input-field">
                                                 <button className="btn deep-purple lighten-1 waves-effect waves-light">Create account</button>

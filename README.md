@@ -5,13 +5,15 @@ The web app to sign up for private events. Users can find events only by enterin
 ### Client
 Framework ReactJS + Redux.
 
-Alsa used:
+Also used:
 * [Materialize](https://materializecss.com) for the styles,
 * [axios](https://github.com/axios/axios) for the http queries,
 * [moment](https://momentjs.com/) for the dates management.
 
 ### Server
 RESTful web service with JEE. Database queries are managed with JPA.
+
+On branch `JDBC` there is JDBC version of queries management, where the answers are passed by objects, not with lists like in JPA version.
 
 ### Database
 PostgreSQL cloud database [ElephantSQL](https://www.elephantsql.com/)
@@ -34,3 +36,9 @@ Also you will need extra libraries:
 * postgre
 
 After downloading the *.jar files put them inside `meetUP-server/WebContent/WEB-INF/lib/`.
+
+## Future development ideas
+* return to JDBC (JPA was required) or chande JPA to objects not lists
+* add polish language
+* add animation for disappering and appearing cards
+* block from accessing events by id that user is not participant

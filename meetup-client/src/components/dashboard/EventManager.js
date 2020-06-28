@@ -4,6 +4,7 @@ import CreateEvent from '../events/manageEvents/CreateEvent'
 import {connect} from 'react-redux'
 import {getAuthorEventsAction} from '../../store/actions/userReducerActions'
 import LoginError from '../authentication/LoginError'
+import moment from 'moment'
 
 class AddEventSection extends Component {
     state = {
@@ -55,11 +56,13 @@ class EventManager extends Component {
     }
 
     render () {
+        var incomingEvents = this.props.events.filter( event => moment(event.date, 'DD-MM-YYYY HH:mm') > moment() );
+
         return this.props.isAuth ? (
             <div className="container">
                 <div className="row">
                     <div className="col s12 m6">
-                        <EventManagerList events={this.props.events}/>
+                        <EventManagerList events={incomingEvents}/>
                     </div>
                     <div className="col s12 m5 offset-m1">
                         <AddEventSection />

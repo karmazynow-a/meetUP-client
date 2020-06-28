@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {leaveEventAction} from '../../../store/actions/eventReducerActions'
+import { withRouter } from 'react-router-dom'
 
 
 class LeaveEvent extends Component {
 
     handleLeave = (e) => {
-        //reduver to leave event
-        console.log("leaving", this.props.event_id, this.props.person_id)
         this.props.leaveEventAction(this.props.event_id, this.props.person_id);
-        
         this.props.history.push("/");
     }
 
     render() {
+        console.log('props leave', this.props)
         return (
             <div className="section">
                 <div className="card">
@@ -46,4 +45,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeaveEvent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LeaveEvent));

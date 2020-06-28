@@ -1,11 +1,12 @@
 import React from 'react'
 
 import Comment from './Comment'
+import moment from 'moment'
 
 const CommentList = ({comments}) => {
     var sortedComments = comments.sort((a,b) => {
-        return new Date(a.date).getTime() - 
-            new Date(b.date).getTime()
+        return moment(a.date, 'DD-MM-YYYY HH:mm') - 
+        moment(b.date, 'DD-MM-YYYY HH:mm')
     }).reverse();
 
     var outputComments = sortedComments && sortedComments.map(comment => {

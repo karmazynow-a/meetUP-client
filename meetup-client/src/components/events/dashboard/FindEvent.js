@@ -73,7 +73,7 @@ class FindEvent extends Component {
                         <form onSubmit={this.handleSubmit} className="white">
                             <div className="input-field">
                                 <i className="material-icons prefix">search</i>
-                                <input type="text" id="key" onChange={this.handleChange} />
+                                <input type="text" id="key" onChange={this.handleChange} required/>
                             </div>
                             <div className="input-field center">
                                 <button className="btn deep-purple lighten-1 waves-effect waves-light">Find</button>

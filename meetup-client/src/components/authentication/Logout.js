@@ -1,11 +1,16 @@
 import { Component } from 'react'
 import {connect} from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import {logoutAction} from '../../store/actions/userReducerActions'
 
 class Logout extends Component {
+
+    componentDidMount = () => {
+        this.props.logoutAction()
+        this.props.history.push("/")
+    }
+
     render(){
-        this.props.logoutAction();
-        this.props.history.push("/");
         return null;
     }
 }
@@ -17,4 +22,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Logout);
+export default withRouter(connect(null, mapDispatchToProps)(Logout));
