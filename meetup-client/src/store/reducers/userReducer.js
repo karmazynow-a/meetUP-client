@@ -1,10 +1,10 @@
 // currently logged in user
 
 const initState = {
-    isAuth: false,
+    isAuth: null,
     userDetails: {},
     events: [],
-    author_events: [],
+    authorEvents: [],
     isLoading: false
 }
 
@@ -13,8 +13,13 @@ const userReducer = (state = initState, action) => {
         return {
             ...state,
             isAuth: true,
-            isLoading: false,
             userDetails: action.userDetails
+        }
+    }
+    else if (action.type === 'AUTH_FAILED') {
+        return {
+            ...state,
+            isAuth: false,
         }
     }
     else if (action.type === 'NEW_USER') {
@@ -23,32 +28,22 @@ const userReducer = (state = initState, action) => {
     else if (action.type === 'LOGOUT_USER') {
         return {
             ...state,
-            isAuth: false,
-            isLoading: false,
+            isAuth: null,
             userDetails: {}
         }
     }
     else if (action.type === 'PERSON_EVENTS'){
         return {
             ...state,
-            isLoading: false,
             events: action.events
         }
     }
     else if (action.type === 'AUTHOR_EVENTS'){
         return {
             ...state,
-            isLoading: false,
-            author_events: action.events
+            authorEvents: action.events
         }
     }
-    else if (action.type === 'IS_LOADING'){
-        return {
-            ...state,
-            isLoading: true
-        }
-    }
-
 
     return state;
 }

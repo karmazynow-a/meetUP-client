@@ -100,25 +100,30 @@ export const deleteCommentAction = (id, event_id) => {
 
 export const findEventAction = (key) => {
     return (dispatch, getState) => {
+        dispatch({type: 'CLEAR_KEY'});
+
         let queryLink = config.dblink + "event/key/" + key;
 
         axios.get(queryLink)
             .then(res => {
-                if (res.status === 200){
+                if (res.status === 200 && res.data.length){
                     //key is found
+                    console.log("Key found!");
 
-                    let id = res.data.id;
+                    let id = res.data[0][0];
                     dispatch(getEventDetailsAction(id));
                     dispatch(getEventCommAction(id));
                     dispatch(getEventPartAction(id));
                     dispatch({type: 'FIND_EVENT', found: true});
                 }
                 else {
+                    console.log("Key not found!");
                     dispatch({type: 'FIND_EVENT', found: false});
                 }
             })
             .catch(error => {
-                console.log("Key not found!")
+                dispatch({type: 'FIND_EVENT', found: false});
+                console.log("Key not found!");
             });
         }    
 }
@@ -137,7 +142,7 @@ export const joinEventAction = (event_id, person_id) => {
 
                 dispatch(getEventPartAction(event_id));
                 dispatch(getPartEventsAction(person_id));
-                dispatch({type: 'JOIN_EVENT', found: false});
+                dispatch({type: 'CLEAR_KEY'});
             })
         }    
 }

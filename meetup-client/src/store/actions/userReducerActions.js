@@ -3,6 +3,7 @@ import {config} from '../../config'
 
 export const authAction = (credentials) => {
     return (dispatch, getState) => {
+        console.log("Sending credentials...");
         let dbAuthlink = config.dblink + 'person/email/' + credentials.email + "/";
         axios.get(dbAuthlink)
             .then(res => {
@@ -15,12 +16,16 @@ export const authAction = (credentials) => {
                             fname: res.data[1],
                             email: res.data[3],
                         }
-
+                        console.log("Success");
                         dispatch({type: 'AUTH_USER', userDetails: userDetails});
                     } else {
-                        alert("Wrong e-mail or password!")
+                        console.log("Failure... wrong password");
+                        dispatch({type: 'AUTH_FAILED'});
                     }
-
+                }
+                else {
+                    console.log("Failure... wrong response status");
+                    dispatch({type: 'AUTH_FAILED'});
                 }
             });   
     }
@@ -46,20 +51,28 @@ export const editUserAction = (credentials) => {
 }
 
 export const signupAction = (credentials) => {
+    console.log("Send credentials...");
     return (dispatch, getState) => {
         let dbAuthlink = config.dblink + 'person/';
 
         axios.post(dbAuthlink, credentials)
             .then(res => {
-                console.log(res.status);
+                if(res.status === 200){
+                    console.log(res.status);
 
-                //login the user
-                dispatch(authAction({
-                    email: credentials.email,
-                    password: credentials.password
-                }));
+                    //login the user
+                    dispatch(authAction({
+                        email: credentials.email,
+                        password: credentials.password
+                    }));
 
-                dispatch({ type: 'NEW_USER' });
+                    dispatch({ type: 'NEW_USER' });
+                    console.log("Success");
+                }
+                else {
+                    console.log("Failure... wrong response status");
+                    dispatch({type: 'AUTH_FAILED'});
+                }
             })
     }
 }
@@ -85,6 +98,8 @@ export const getPartEventsAction = (id) => {
                     })
                 }
 
+                console.log("Person events are: ", eventList)
+
                 dispatch({type: 'PERSON_EVENTS', events: eventList});
             });
     }
@@ -96,7 +111,6 @@ export const getAuthorEventsAction = (id) => {
 
         axios.get(queryLink)
             .then(res => {
-                console.log(res)
                 var eventList = []
                 for (var e of res.data) {
                     eventList.push({
@@ -109,13 +123,9 @@ export const getAuthorEventsAction = (id) => {
                     })
                 }
 
+                console.log("Author events are: ", eventList)
+
                 dispatch({type: 'AUTHOR_EVENTS', events: eventList});
             })
         }
-}
-
-export const loadingAction = () => {
-    return (dispatch, getState) => {
-        dispatch({type: 'IS_LOADING'});
-    }
 }

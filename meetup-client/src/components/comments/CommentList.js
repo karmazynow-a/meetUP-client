@@ -3,7 +3,12 @@ import React from 'react'
 import Comment from './Comment'
 
 const CommentList = ({comments}) => {
-    var outputComments = comments && comments.map(comment => {
+    var sortedComments = comments.sort((a,b) => {
+        return new Date(a.date).getTime() - 
+            new Date(b.date).getTime()
+    }).reverse();
+
+    var outputComments = sortedComments && sortedComments.map(comment => {
         return (
             <Comment comment={comment} key={comment.id}/>
         )

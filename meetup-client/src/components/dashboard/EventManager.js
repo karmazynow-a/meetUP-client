@@ -74,7 +74,7 @@ const mapStateToProps = (state) => {
     return {
         isAuth: state.user.isAuth,
         userDetails: state.user.userDetails,
-        events: state.user.author_events
+        events: state.user.authorEvents
     }
 }
 

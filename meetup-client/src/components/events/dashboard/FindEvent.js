@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {findEventAction, joinEventAction} from '../../../store/actions/eventReducerActions'
+import M from 'materialize-css';
 
 class FindEvent extends Component {
     state = {
-        key: ''
+        key: '',
+        showErrorMessage: false,
     }
 
     handleChange = (e) => {
@@ -15,15 +17,34 @@ class FindEvent extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
 
-        this.props.findEventAction(this.state.key);
+        if (!this.state.key){
+            M.toast({html: 'Key should not be empty!'});
+        }
+        else {
+            this.setState({
+                ...this.state,
+                showErrorMessage: true,
+            })
+            this.props.findEventAction(this.state.key);
+        }
     }
 
     handleJoin = (e) => {
         e.preventDefault();
         console.log('join', this.props.event_details.id, this.props.user_id);
         this.props.joinEventAction(this.props.event_details.id, this.props.user_id)
+    }
+
+    componentDidUpdate = () => {
+        // show message just once
+        if (this.state.showErrorMessage &&  this.props.key_found === false){
+            M.toast({html: 'Key not found!'});
+            this.setState({
+                ...this.state,
+                showErrorMessage: false,
+            })
+        }
     }
 
     render() {

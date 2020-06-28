@@ -5,8 +5,12 @@ import EmptyEvent from '../EmptyEvent'
 
 
 const EventList = ({events}) => {
+    var sortedEvents = events.sort((a,b) => {
+        return new Date(a.date).getTime() - 
+            new Date(b.date).getTime()
+    }).reverse();
 
-    var outputEvents = events && events.map(event => {
+    var outputEvents = sortedEvents && sortedEvents.map(event => {
         return (
             <EventSummary event={event} key={event.id}/>
         )

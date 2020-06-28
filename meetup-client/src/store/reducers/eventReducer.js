@@ -5,6 +5,7 @@ const initState = {
     participants: [],
     comments: [],
     isParticipant: false,
+    isLatestKeyFound: null,
 }
 
 const eventReducer = (state = initState, action) => {
@@ -39,10 +40,10 @@ const eventReducer = (state = initState, action) => {
             isLatestKeyFound: action.found
         }
     }
-    else if (action.type === 'JOIN_EVENT') {
+    else if (action.type === 'CLEAR_KEY') {
         return {
             ...state,
-            isLatestKeyFound: action.found
+            isLatestKeyFound: null
         }
     }
     else if (action.type === 'DELETE_EVENT') {
