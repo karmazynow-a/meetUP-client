@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {leaveEventAction} from '../../../store/actions/eventReducerActions'
 import { withRouter } from 'react-router-dom'
+
+import {leaveEventAction} from '../../../store/actions/eventReducerActions'
 
 
 class LeaveEvent extends Component {
@@ -12,7 +13,6 @@ class LeaveEvent extends Component {
     }
 
     render() {
-        console.log('props leave', this.props)
         return (
             <div className="section">
                 <div className="card">

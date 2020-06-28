@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 
 import EventSummary from '../EventSummary'
 import ParticipantList from '../../participants/ParticipantList'
 import CommentList from '../../comments/CommentList'
 import CreateComment from '../../comments/CreateComment'
-import {connect} from 'react-redux'
-import {getEventDetailsAction, getEventPartAction, getEventCommAction} from '../../../store/actions/eventReducerActions'
 import LeaveEvent from './LeaveEvent'
 import LoginError from '../../authentication/LoginError'
+import {getEventDetailsAction, getEventPartAction, getEventCommAction} from '../../../store/actions/eventReducerActions'
 
 // wrapper for CreateComment
 class AddCommentSection extends Component {

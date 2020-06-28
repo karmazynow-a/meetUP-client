@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
+import moment from 'moment'
+import {connect} from 'react-redux'
+
 import EventList from '../events/dashboard/EventList'
 import FindEvent from '../events/dashboard/FindEvent'
 import LoginError from '../authentication/LoginError'
-import {connect} from 'react-redux'
 import {getPartEventsAction} from '../../store/actions/userReducerActions'
-import moment from 'moment'
+
 
 class Dashboard extends Component {
 

@@ -2,6 +2,7 @@ import React from 'react'
 
 import Participant from './Participant'
 
+
 const ParticipantList = ({participants}) => {
 
     var outputParticipants = participants && participants.map(participant => {

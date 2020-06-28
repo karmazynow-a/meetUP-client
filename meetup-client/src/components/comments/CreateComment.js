@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {addCommAction} from '../../store/actions/eventReducerActions'
 import moment from 'moment'
+
+import {addCommAction} from '../../store/actions/eventReducerActions'
 
 
 class CreateComment extends Component {

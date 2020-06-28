@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const Participant = ({participant}) => {
     return (
         <div className="card z-depth-0 event-summary">

@@ -1,8 +1,9 @@
 import React from 'react'
+import moment from 'moment'
 
 import ManageEvent from './ManageEvent'
 import EmptyEvent from '../EmptyEvent'
-import moment from 'moment'
+
 
 const EventManagerList = ({events}) => {
     var sortedEvents = events.sort((a,b) => {

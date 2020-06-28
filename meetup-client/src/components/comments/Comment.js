@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+
 import {deleteCommentAction} from '../../store/actions/eventReducerActions'
 
 class Comment extends Component {

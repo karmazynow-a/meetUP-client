@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {deleteEventAction} from '../../../store/actions/eventReducerActions'
+
 import EditEvent from './EditEvent'
+import {deleteEventAction} from '../../../store/actions/eventReducerActions'
+
 
 class ManageEvent extends Component {
     state = {

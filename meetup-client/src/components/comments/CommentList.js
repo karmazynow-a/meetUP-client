@@ -1,7 +1,8 @@
 import React from 'react'
+import moment from 'moment'
 
 import Comment from './Comment'
-import moment from 'moment'
+
 
 const CommentList = ({comments}) => {
     var sortedComments = comments.sort((a,b) => {

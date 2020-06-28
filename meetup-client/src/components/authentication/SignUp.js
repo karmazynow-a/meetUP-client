@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import M from 'materialize-css';
+import M from 'materialize-css'
 import {connect} from 'react-redux'
-import {signupAction} from '../../store/actions/userReducerActions'
-import LoadingScreen from '../layout/LoadingScreen'
 import { Redirect } from 'react-router-dom'
+
+import LoadingScreen from '../layout/LoadingScreen'
+import {signupAction} from '../../store/actions/userReducerActions'
 
 class SignUp extends Component {
     state = {

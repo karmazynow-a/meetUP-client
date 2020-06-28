@@ -1,8 +1,8 @@
 import React from 'react'
+import moment from 'moment'
 
 import EventSummary from '../EventSummary'
 import EmptyEvent from '../EmptyEvent'
-import moment from 'moment'
 
 
 const EventList = ({events}) => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import M from 'materialize-css';
+import M from 'materialize-css'
 import {connect} from 'react-redux'
+
 import LoginError from '../authentication/LoginError'
 import {editUserAction} from '../../store/actions/userReducerActions'
 

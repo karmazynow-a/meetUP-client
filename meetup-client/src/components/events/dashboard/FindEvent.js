@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import M from 'materialize-css'
 import {connect} from 'react-redux'
+
 import {findEventAction, joinEventAction} from '../../../store/actions/eventReducerActions'
-import M from 'materialize-css';
+
 
 class FindEvent extends Component {
     state = {

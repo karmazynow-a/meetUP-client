@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import DatePicker from "react-datepicker"
 import moment from 'moment'
-import {addEventAction} from '../../../store/actions/eventReducerActions'
+import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+
+import {addEventAction} from '../../../store/actions/eventReducerActions'
+
 
 class CreateEvent extends Component {
     state = {

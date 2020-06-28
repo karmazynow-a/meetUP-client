@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import M from 'materialize-css';
+import M from 'materialize-css'
 import {connect} from 'react-redux'
-import {authAction} from '../../store/actions/userReducerActions'
-import LoadingScreen from '../layout/LoadingScreen'
 import { Redirect } from 'react-router-dom'
+
+import LoadingScreen from '../layout/LoadingScreen'
+import {authAction} from '../../store/actions/userReducerActions'
+
 
 class SignIn extends Component {
     state = {

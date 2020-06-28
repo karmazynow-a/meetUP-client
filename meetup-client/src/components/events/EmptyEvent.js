@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const EmptyEvent = () => {
     return (
         <div className="card event-summary">

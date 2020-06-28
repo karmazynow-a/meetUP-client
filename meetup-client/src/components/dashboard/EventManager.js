@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
+import moment from 'moment'
+import {connect} from 'react-redux'
+
 import EventManagerList from '../events/manageEvents/EventManagerList'
 import CreateEvent from '../events/manageEvents/CreateEvent'
-import {connect} from 'react-redux'
-import {getAuthorEventsAction} from '../../store/actions/userReducerActions'
 import LoginError from '../authentication/LoginError'
-import moment from 'moment'
+import {getAuthorEventsAction} from '../../store/actions/userReducerActions'
+
 
 class AddEventSection extends Component {
     state = {

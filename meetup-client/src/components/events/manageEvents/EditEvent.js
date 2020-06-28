@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import DatePicker from "react-datepicker"
-import {editEventAction} from '../../../store/actions/eventReducerActions'
 import moment from 'moment'
+import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+
+import {editEventAction} from '../../../store/actions/eventReducerActions'
+
 
 class EditEvent extends Component {
     state = {
@@ -38,7 +40,6 @@ class EditEvent extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         var formatedDate = moment(this.state.date).format("DD-MM-YYYY HH:mm")
-        console.log(this.state.date, formatedDate)
 
         let event = {
             id: this.props.event.id,

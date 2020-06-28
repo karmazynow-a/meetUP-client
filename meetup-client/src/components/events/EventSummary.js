@@ -2,6 +2,7 @@ import React from 'react'
 
 import {NavLink} from 'react-router-dom'
 
+
 const EventSummary = ({event}) => {
     return (
         <div className="card event-summary">
