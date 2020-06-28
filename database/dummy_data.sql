@@ -7,9 +7,9 @@ INSERT INTO person (fname, lname, email, password) VALUES
 
 
 INSERT INTO event (name, key, author_id, date) VALUES 
-    ('Tea with besties', 'key1', 1, '2020-06-29 19:00'),
-    ('Partay', 'key2', 1, '2020-07-16 21:00'),
-    ('Funeral', 'key3', 2, '2021-01-3');
+    ('Tea with besties', 'key1', 1, '29-06-2020 19:00'),
+    ('Partay', 'key2', 1, '16-07-2020 21:00'),
+    ('Funeral', 'key3', 2, '27-01-2021 9:00');
 
 
 INSERT INTO participation (person_id, event_id) VALUES 

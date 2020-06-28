@@ -35,6 +35,8 @@ export const authAction = (credentials) => {
 
 export const editUserAction = (credentials) => {
     console.log("Sending credentials...");
+    delete credentials.isLoading;
+    
     return (dispatch, getState) => {
         let dbAuthlink = config.dblink + 'person/';
 
@@ -54,6 +56,7 @@ export const signupAction = (credentials) => {
     console.log("Sending credentials...");
     return (dispatch, getState) => {
         let dbAuthlink = config.dblink + 'person/';
+        delete credentials.isLoading;
 
         axios.post(dbAuthlink, credentials)
             .then(res => {
