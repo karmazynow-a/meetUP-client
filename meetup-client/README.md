@@ -1,8 +1,9 @@
 # TODO
 
-* validate forms
+* validate forms - password, email
 * add error messages for removing yourself from your event and wrong password
-* loading
+* and wrong key!!
+* loading screen
 * responses from db
 * check is user is logged in
 * block from accessing events by id that user is not signed in - chyba się nie da xd
