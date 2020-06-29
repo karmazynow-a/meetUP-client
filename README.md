@@ -21,6 +21,8 @@ PostgreSQL cloud database [ElephantSQL](https://www.elephantsql.com/)
 ## Instalation
 Before running locally server or client app you have to provide database credentials in `meetUP-server/WebContent/META-INF/context.xml` and link to the database in order to send the REST queries in `meetUP-client/src/config.js`
 
+More information about installing or deploying on IBM Cloud are available in documentation.
+
 ### Client
 To install client app use:
 
