@@ -1,5 +1,6 @@
-// currently logged in user
-
+/**
+ * Initial state of store used to hold information about currently logged in user.
+ */
 const initState = {
     isAuth: null,
     userDetails: {},
@@ -27,9 +28,6 @@ const userReducer = (state = initState, action) => {
             ...state,
             isAuth: null,
         }
-    }
-    else if (action.type === 'NEW_USER') {
-        return state
     }
     else if (action.type === 'LOGOUT_USER') {
         return {

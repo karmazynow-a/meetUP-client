@@ -5,6 +5,9 @@ import EventSummary from '../EventSummary'
 import EmptyEvent from '../EmptyEvent'
 
 
+/**
+ * Display list of future events, sorted by date.
+ */
 const EventList = ({events}) => {
     var sortedEvents = events.sort((a,b) => {
         return moment(a.date, 'DD-MM-YYYY HH:mm').toDate().getTime() - 

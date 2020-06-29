@@ -5,6 +5,10 @@ import moment from 'moment'
 import {addCommAction} from '../../store/actions/eventReducerActions'
 
 
+/**
+ * Displays form to create comment and handle submit action by dispatching
+ * addCommAction action.
+ */
 class CreateComment extends Component {
     state = {
         content: '',

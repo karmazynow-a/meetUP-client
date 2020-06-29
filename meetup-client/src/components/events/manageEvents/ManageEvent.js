@@ -5,6 +5,10 @@ import EditEvent from './EditEvent'
 import {deleteEventAction} from '../../../store/actions/eventReducerActions'
 
 
+/**
+ * Component to display single event in organizator mode. Event can be edited
+ * or deleted.
+ */
 class ManageEvent extends Component {
     state = {
         showForm: false,

@@ -3,6 +3,10 @@ import {connect} from 'react-redux'
 
 import {deleteCommentAction} from '../../store/actions/eventReducerActions'
 
+
+/**
+ * Display comment and handle delete action.
+ */
 class Comment extends Component {
 
     handleClick = (e) => {

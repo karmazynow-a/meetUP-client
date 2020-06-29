@@ -4,6 +4,10 @@ import { withRouter } from 'react-router-dom'
 
 import {logoutAction} from '../../store/actions/userReducerActions'
 
+
+/**
+ * Logout the user and redirect to home page
+ */
 class Logout extends Component {
 
     componentDidMount = () => {

@@ -5,6 +5,9 @@ import { withRouter } from 'react-router-dom'
 import {leaveEventAction} from '../../../store/actions/eventReducerActions'
 
 
+/**
+ * Component to handle leaving the event. Displayed in event summary.
+ */
 class LeaveEvent extends Component {
 
     handleLeave = (e) => {

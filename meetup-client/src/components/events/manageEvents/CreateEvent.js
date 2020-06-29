@@ -8,6 +8,10 @@ import "react-datepicker/dist/react-datepicker.css"
 import {addEventAction} from '../../../store/actions/eventReducerActions'
 
 
+/**
+ * Create new event. Component displays form, and after submit dispatch an action.
+ * There are also additional functionalities like random key generator and date picker.
+ */
 class CreateEvent extends Component {
     state = {
         name: '',

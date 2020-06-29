@@ -6,6 +6,9 @@ import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 
 
+/**
+ * Navigation bar with links depending on authentication state.
+ */
 const Navbar = ({isAuth}) => {
     return (
         <div className="navbar-fixed">

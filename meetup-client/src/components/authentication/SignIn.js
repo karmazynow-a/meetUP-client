@@ -7,6 +7,11 @@ import LoadingScreen from '../layout/LoadingScreen'
 import {authAction} from '../../store/actions/userReducerActions'
 
 
+/**
+ * Component displays form to sign in. After submission it validates inputs:
+ * e-mail and password dispatch login action and reacts to the result: 
+ * redirect to home page or display an error.
+ */
 class SignIn extends Component {
     state = {
         email: '',

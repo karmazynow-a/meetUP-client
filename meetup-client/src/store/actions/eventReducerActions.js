@@ -1,7 +1,9 @@
 import axios from 'axios';
 import {config} from '../../config'
 
-
+/**
+ * Action to get details of event based on its id.
+ */
 export const getEventDetailsAction = (id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/details/" + id;
@@ -24,6 +26,9 @@ export const getEventDetailsAction = (id) => {
         }
 }
 
+/**
+ * Action to get all participants of event by its id.
+ */
 export const getEventPartAction = (id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "participation/event/" + id;
@@ -44,6 +49,9 @@ export const getEventPartAction = (id) => {
         }
 }
 
+/**
+ * Action to get all comments of event by its id.
+ */
 export const getEventCommAction = (id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "comment/event/" + id;
@@ -72,6 +80,11 @@ export const getEventCommAction = (id) => {
         }
 }
 
+/**
+ * Action to add comment.
+ * Afted successful execution new list of comment is downloaded
+ * by dispatching getEventCommAction action.
+ */
 export const addCommAction = (comment) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "comment/";
@@ -85,6 +98,11 @@ export const addCommAction = (comment) => {
         }    
 }
 
+/**
+ * Action to delete comment.
+ * Afted successful execution new list of comment is downloaded
+ * by dispatching getEventCommAction action.
+ */
 export const deleteCommentAction = (id, event_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "comment/" + id;
@@ -99,6 +117,11 @@ export const deleteCommentAction = (id, event_id) => {
         }    
 }
 
+/**
+ * Action to find event by key. If it's not found, state isLatestKeyFound
+ * is set to false. Otherwise, the details, comments and participatns 
+ * are downloaded by dispatching actions.
+ */
 export const findEventAction = (key) => {
     return (dispatch, getState) => {
         dispatch({type: 'CLEAR_KEY'});
@@ -129,9 +152,11 @@ export const findEventAction = (key) => {
         }    
 }
 
-
+/**
+ * Action to join event based on event's and person's ids.
+ * After than the participants and events lists are refreshed.
+ */
 import {getPartEventsAction} from './userReducerActions'
-
 export const joinEventAction = (event_id, person_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "participation/";
@@ -148,7 +173,10 @@ export const joinEventAction = (event_id, person_id) => {
         }    
 }
 
-
+/**
+ * Action to leave event based on event's and person's ids.
+ * After than the participants and events lists are refreshed.
+ */
 export const leaveEventAction = (event_id, person_id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "participation/" + person_id + "/" + event_id;
@@ -168,7 +196,10 @@ export const leaveEventAction = (event_id, person_id) => {
         }    
 }
 
-
+/**
+ * Action to delete event based on event's and authors's ids.
+ * After than the events list is refreshed.
+ */
 import {getAuthorEventsAction} from './userReducerActions'
 export const deleteEventAction = (id, author_id) => {
     return (dispatch, getState) => {
@@ -185,6 +216,10 @@ export const deleteEventAction = (id, author_id) => {
         }    
 }
 
+/**
+ * Action to add new event. After receiving response, author of the event is
+ * added as a participant and author's event list is refreshed.
+ */
 export const addEventAction = (event) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/";
@@ -198,6 +233,9 @@ export const addEventAction = (event) => {
         }    
 }
 
+/**
+ * Action to edit event. After receiving response author's event list is refreshed.
+ */
 export const editEventAction = (event) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/";

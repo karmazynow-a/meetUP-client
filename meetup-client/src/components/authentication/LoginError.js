@@ -1,5 +1,9 @@
 import React from 'react'
 
+
+/**
+ * Functional component to display error for unlogged user
+ */
 const LoginError = () => {
     return (
         <div className="container">

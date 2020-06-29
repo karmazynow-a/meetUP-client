@@ -1,6 +1,11 @@
 import axios from 'axios';
 import {config} from '../../config'
 
+/**
+ * Action to authenticate user. Received password is compared to
+ * given one. If password is correct user details are updated.
+ * Otherwise, state isAuth is set to false.
+ */
 export const authAction = (credentials) => {
     return (dispatch, getState) => {
         dispatch({type: 'RESET_AUTH'});
@@ -33,6 +38,9 @@ export const authAction = (credentials) => {
     }
 }
 
+/**
+ * Action to update user's data. 
+ */
 export const editUserAction = (credentials) => {
     console.log("Sending credentials...");
     delete credentials.isLoading;
@@ -52,6 +60,10 @@ export const editUserAction = (credentials) => {
     }
 }
 
+/**
+ * Action to create new user. After receiving successful response,
+ * user is logged in by dispatching action.
+ */
 export const signupAction = (credentials) => {
     console.log("Sending credentials...");
     return (dispatch, getState) => {
@@ -84,12 +96,18 @@ export const signupAction = (credentials) => {
     }
 }
 
+/**
+ * Action to logout user.
+ */
 export const logoutAction = () => {
     return (dispatch, getState) => {
         dispatch({type: 'LOGOUT_USER'});
     }
 }
 
+/**
+ * Action to get all events that user (identified by id) is part of.
+ */
 export const getPartEventsAction = (id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/person/" + id;
@@ -114,6 +132,9 @@ export const getPartEventsAction = (id) => {
     }
 }
 
+/**
+ * Action to get all events that user (identified by id) is author of.
+ */
 export const getAuthorEventsAction = (id) => {
     return (dispatch, getState) => {
         let queryLink = config.dblink + "event/author/" + id;

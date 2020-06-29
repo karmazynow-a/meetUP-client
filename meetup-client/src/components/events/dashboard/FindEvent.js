@@ -5,6 +5,11 @@ import {connect} from 'react-redux'
 import {findEventAction, joinEventAction} from '../../../store/actions/eventReducerActions'
 
 
+/**
+ * Component to find event by key. It displays form to input the key.
+ * If the event is found, join card will appear, otherwise error message.
+ * The component dispatches two actions: findEvent and joinEvent.
+ */
 class FindEvent extends Component {
     state = {
         key: '',

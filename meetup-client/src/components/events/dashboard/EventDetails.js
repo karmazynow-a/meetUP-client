@@ -9,7 +9,10 @@ import LeaveEvent from './LeaveEvent'
 import LoginError from '../../authentication/LoginError'
 import {getEventDetailsAction, getEventPartAction, getEventCommAction} from '../../../store/actions/eventReducerActions'
 
-// wrapper for CreateComment
+
+/**
+ * Simmilar to AddEventSection, component to store CreateComment component, that will appear on button click.
+ */
 class AddCommentSection extends Component {
     state = {
         createFormVisible: false,
@@ -51,6 +54,10 @@ class AddCommentSection extends Component {
 }
 
 
+
+/**
+ * Display details about event including participant list, summary and comments section.
+ */
 class EventDetails extends Component {
     
     componentDidMount = () => {

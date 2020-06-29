@@ -2,6 +2,9 @@ import React from 'react'
 import {NavLink} from 'react-router-dom'
 
 
+/**
+ * List of navigation links to be displayed when user is logged in.
+ */
 const SignedInLinks = () => {
     return (
         <ul className="right">

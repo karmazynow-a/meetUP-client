@@ -3,6 +3,9 @@ import React from 'react'
 import {NavLink} from 'react-router-dom'
 
 
+/**
+ * Displays summary of event - name, date, and organizator data.
+ */
 const EventSummary = ({event}) => {
     return (
         <div className="card event-summary">
