@@ -173,6 +173,13 @@ public class RestJPA {
 	
 	
 	/*** COMMENT MAPPING ***/
+    /**
+    * GET method
+    * Get all records from Comment table using NamedQuery.
+    * 
+    * @return      list of all Comment records from table
+    * @see         Comment
+    */
     @GET
     @Path("/comment")
     @Produces({MediaType.APPLICATION_JSON})
@@ -182,6 +189,14 @@ public class RestJPA {
     	return comments;
 	}
     
+    /**
+    * GET method
+    * Get Comment record identified by id.
+    * 
+    * @param id		id of Comment object
+    * @return      	Comment object
+    * @see         	Comment
+    */
     @GET
     @Path("/comment/{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -189,6 +204,15 @@ public class RestJPA {
     	return (Comment) entityManager.find(Comment.class, Integer.parseInt(id));
 	}
     
+    /**
+     * GET method
+     * Get list of Comments from Event identified by Event's id.
+     * 
+     * @param id		id of Event object
+     * @return      	List of Comments
+     * @see         	Comment
+     * @see         	Event
+     */
     @SuppressWarnings({ "rawtypes" })
 	@GET
     @Path("/comment/event/{id}")
@@ -201,6 +225,14 @@ public class RestJPA {
 		return entityManager.createQuery(query).setParameter("id", Integer.parseInt(id)).getResultList();
 	}
     
+    /**
+     * DELETE method
+     * Remove Comment record, identified by id.
+     * 
+     * @param id		id of Comment object
+     * @return      	1 if operation was successful, otherwise 0
+     * @see         	Comment
+     */
 	@DELETE
 	@Path("/comment/{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -217,6 +249,14 @@ public class RestJPA {
 		}
 	}
     
+	/**
+    * POST method
+    * Create new Comment record.
+    * 
+    * @param comment	new object
+    * @return      		object's id if operation was successful, otherwise -1
+    * @see         		Comment
+    */
 	@POST
 	@Path("/comment")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -233,6 +273,14 @@ public class RestJPA {
 		}
 	}
 	
+	/**
+    * PUT method
+    * Update Comment record.
+    * 
+    * @param comment	new object
+	* @return      		object's id if operation was successful, otherwise -1
+	* @see         		Comment
+	*/
 	@PUT
 	@Path("/comment")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -250,6 +298,13 @@ public class RestJPA {
 	}
 
 	/*** EVENT MAPPING ***/
+    /**
+    * GET method
+    * Get all records from Event table using NamedQuery.
+    * 
+    * @return      list of all Event records from table
+    * @see         Event
+    */
     @GET
     @Path("/event")
     @Produces({MediaType.APPLICATION_JSON})
@@ -258,14 +313,30 @@ public class RestJPA {
     	List<Event> events = (List<Event>) entityManager.createNamedQuery("findEvents").getResultList();
     	return events;
 	}
-    
+
+    /**
+    * GET method
+    * Get single Event record based on id.
+    * 
+    * @param id		object's id
+    * @return      	Event object
+    * @see         	Event
+    */
     @GET
     @Path("/event/{id}")
     @Produces({MediaType.APPLICATION_JSON})
 	public Event getEventById(@PathParam("id") String id) {
     	return (Event) entityManager.find(Event.class, Integer.parseInt(id));
 	}
-    
+
+    /**
+    * GET method
+    * Get single Event record based on key.
+    * 
+    * @param key	object's key
+    * @return      	Event object
+    * @see         	Event
+    */
     @SuppressWarnings({"rawtypes" })
 	@GET
     @Path("/event/key/{key}")
@@ -275,6 +346,15 @@ public class RestJPA {
 		return entityManager.createQuery(query).setParameter("key", key).getResultList();
 	}
     
+    /**
+    * GET method
+    * Get details of Event (including author's data), based on Event's id.
+    * 
+    * @param id		Event's id
+    * @return      	details of Event in List
+    * @see         	Event
+    * @see         	Person
+    */
     @SuppressWarnings("rawtypes")
 	@GET
     @Path("/event/details/{id}")
@@ -287,6 +367,15 @@ public class RestJPA {
 		return entityManager.createQuery(query).setParameter("id", Integer.parseInt(id)).getResultList();
 	}
     
+    /**
+     * GET method
+     * Get all Events that Person, identified by id, is hosting.
+     * 
+     * @param id		Person's id
+     * @return      	List of Events
+     * @see         	Event
+     * @see         	Person
+     */
     @SuppressWarnings("rawtypes")
 	@GET
     @Path("/event/author/{id}")
@@ -298,6 +387,15 @@ public class RestJPA {
 		return entityManager.createQuery(query).setParameter("id", Integer.parseInt(id)).getResultList();
 	}
     
+    /**
+     * GET method
+     * Get all Events that Person, identified by id, is participant of.
+     * 
+     * @param id		Person's id
+     * @return      	List of Events
+     * @see         	Event
+     * @see         	Person
+     */
     @SuppressWarnings("rawtypes")
 	@GET
     @Path("/event/person/{id}")
@@ -310,6 +408,14 @@ public class RestJPA {
 		return entityManager.createQuery(query).setParameter("id", Integer.parseInt(id)).getResultList();
 	}
     
+    /**
+     * DELETE method
+     * Delete Event record, identified by id.
+     * 
+     * @param id		Eventd's id
+     * @return      	1 if operation was successful, otherwise 0
+     * @see         	Event
+     */
 	@DELETE
 	@Path("/event/{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -326,6 +432,14 @@ public class RestJPA {
 		}
 	}
     
+	/**
+     * POST method
+     * Create new Event record.
+     * 
+     * @param event		new object
+     * @return      	object's id if operation was successful, otherwise -1
+     * @see         	Event
+     */
 	@POST
 	@Path("/event")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -343,6 +457,14 @@ public class RestJPA {
 		}
 	}
 	
+	/**
+     * PUT method
+     * Update Event record.
+     * 
+     * @param event		new object
+     * @return      	object's id if operation was successful, otherwise -1
+     * @see         	Event
+     */
 	@PUT
 	@Path("/event")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -360,6 +482,13 @@ public class RestJPA {
 	}
 	
 	/*** PARTICIPATION MAPPING ***/
+	/**
+    * GET method
+    * Get all records from Participation table using NamedQuery.
+    * 
+    * @return      list of all records from Participation table
+    * @see         Participation
+    */
     @SuppressWarnings("unchecked")
 	@GET
     @Path("/participation")
@@ -368,6 +497,16 @@ public class RestJPA {
     	return (List<Participation>) entityManager.createNamedQuery("findParticipations").getResultList();
 	}
     
+    /**
+     * GET method
+     * Get list of records from Person table that are participation in Event, identified by id.
+     * 
+     * @param id	Event's id
+     * @return      list of Person's First and Last names, that are participation in event
+     * @see         Participation
+     * @see			Person
+     * @see			Event
+     */
     @SuppressWarnings("rawtypes")
 	@GET
     @Path("/participation/event/{id}")
@@ -380,6 +519,18 @@ public class RestJPA {
 		return entityManager.createQuery(query).setParameter("id", Integer.parseInt(id)).getResultList();
 	}
     
+    /**
+     * DELETE method
+     * Delete record from Participation table based on it's composite key. If the person_id is equal to
+     * event's author id, participation will not be removed.
+     * 
+     * @param person_id	Person's id
+     * @param event_id	Event's id
+     * @return      	-1, if user is trying to remove author of event, 
+     * 						1 if transaction was successful, otherwise 0
+     * @see         	Participation
+     * @see				Event
+     */
 	@DELETE
 	@Path("/participation/{person_id}/{event_id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -407,6 +558,14 @@ public class RestJPA {
 		}
 	}
 
+	/**
+     * POST method
+     * Create new Participation record.
+     * 
+     * @param event		new object
+     * @return      	object's id if operation was successful, otherwise -1
+     * @see         	Participation
+     */
 	@POST
 	@Path("/participation")
 	@Consumes({MediaType.APPLICATION_JSON})

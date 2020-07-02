@@ -2,6 +2,14 @@ package model.participation;
 
 import java.io.Serializable;
 
+/**
+ * Composite key class prepared for Participation table. It contains values like person's and event's id, that
+ * will identify one's participation in particular event.
+ * 
+ * Class has prepared set of setters and getters, and also override methods, like equals and hashCode.
+ * 
+ * @see		Participation
+ */
 public class CompositeKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

@@ -10,6 +10,18 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
+/**
+ * Logger class created in order to monitor REST JPA behavior.
+ * 
+ * There are three methods:
+ * 		one to log the start of the RestJPA method,
+ * 		one to log the end of method execution,
+ * 		and one to measure execution time.
+ * 
+ * Based of logs, user can validate performance of REST service, and correctness of the execution.
+ * 
+ * @see		RestJPA
+ */
 @Aspect
 public class LoggerAspect {
 	  @Pointcut("execution(* api.RestJPA.*.*(..))")
@@ -17,12 +29,12 @@ public class LoggerAspect {
 	  }
 	  
 	  @Before("restJPAQueries()")
-	  public void logBefore1(JoinPoint joinPoint)  {
+	  public void logBefore(JoinPoint joinPoint)  {
 		  System.out.println("*** Wykonanie metody " + joinPoint.getSignature().getName() + "...");
 	  }
 	  
 	  @AfterReturning(pointcut = "restJPAQueries()", returning = "retVal")
-	  public void afterReturningMethod1(JoinPoint joinPoint, Object retVal) {
+	  public void afterReturningMethod(JoinPoint joinPoint, Object retVal) {
 	      System.out.println("*** Metoda " + joinPoint.getSignature().getName() + " zwróciła wartość : " + retVal.toString());
 	  }
   
