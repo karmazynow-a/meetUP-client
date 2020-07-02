@@ -4,6 +4,15 @@ package model.event;
 import java.io.Serializable;
 import javax.persistence.*;
 
+
+/**
+ * Class that represents Event table, that contains values like: auto-generated id, name, date,
+ * key and author's id. The date should be in format: YYYY-MM-DD hh:mm:ss, stored in String.
+ * 
+ * The NamedQuery returns list of all records from table.
+ * 
+ * Class has prepared set of setters and getters.
+ */
 @Entity
 @NamedQuery(name="findEvents", query="SELECT e.id, e.name, e.date, e.key, e.author_id FROM Event e")
 public class Event implements Serializable {

@@ -3,6 +3,16 @@ package model.person;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import model.participation.Participation;
+
+/**
+ * Class that represents Person table, that contains values like: auto-generated id, first name, last name,
+ * e-mail and password.
+ * 
+ * The NamedQuery returns list of all records from table.
+ * 
+ * Class has prepared set of setters and getters.
+ */
 @Entity
 @NamedQuery(name="findPeople", query="SELECT p.id, p.fname, p.lname, p.email, p.password FROM Person p")
 public class Person implements Serializable {

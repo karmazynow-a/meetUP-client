@@ -3,6 +3,16 @@ package model.participation;
 import java.io.Serializable;
 import javax.persistence.*;
 
+/**
+ * Class that represents Participation table, that contains values like: person's and event's id,
+ * that are composite key of the class.
+ * 
+ * The NamedQuery returns list of all records from table.
+ * 
+ * Class has prepared set of setters and getters.
+ * 
+ * @see		CompositeKey
+ */
 @Entity
 @IdClass(CompositeKey.class)
 @NamedQuery(name="findParticipations", query="SELECT p.person_id, p.event_id FROM Participation p")

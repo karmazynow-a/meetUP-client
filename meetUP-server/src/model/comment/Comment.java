@@ -3,6 +3,14 @@ package model.comment;
 import java.io.Serializable;
 import javax.persistence.*;
 
+/**
+ * Class that represents Comment table, that contains values like: auto-generated id, author's id, event's id, 
+ * date and content. The date should be in format: YYYY-MM-DD hh:mm:ss, stored in String.
+ * 
+ * The NamedQuery returns list of all records from table.
+ * 
+ * Class has prepared set of setters and getters.
+ */
 @Entity
 @NamedQuery(name="findComments", query="SELECT c.id, c.author_id, c.event_id, c.content, c.date FROM Comment c")
 public class Comment implements Serializable {
