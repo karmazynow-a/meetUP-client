@@ -1,6 +1,9 @@
 import React from 'react'
 
 
+/**
+ * Display information about single participant on the list.
+ */
 const Participant = ({participant}) => {
     return (
         <div className="card z-depth-0 event-summary">

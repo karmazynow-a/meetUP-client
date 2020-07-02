@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import moment from 'moment'
+import M from 'materialize-css'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 import {addEventAction} from '../../../store/actions/eventReducerActions'
 
 
+/**
+ * Create new event. Component displays form, and after submit dispatch an action.
+ * There are also additional functionalities like random key generator and date picker.
+ */
 class CreateEvent extends Component {
     state = {
         name: '',
@@ -30,17 +35,22 @@ class CreateEvent extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        var formatedDate = moment(this.state.date).format("DD-MM-YYYY HH:mm")
+        var eventDate = moment(this.state.date);
 
-        let event = {
-            name: this.state.name, 
-            key: this.state.key,
-            author_id: this.props.author_id,
-            date: formatedDate
+        if (eventDate <= moment()){
+            M.toast({html: 'Date is invalid!'});
+        } else {
+            var formatedDate = eventDate.format("DD-MM-YYYY HH:mm")
+            let event = {
+                name: this.state.name, 
+                key: this.state.key,
+                author_id: this.props.author_id,
+                date: formatedDate
+            }
+    
+            this.props.addEventAction(event);
+            this.props.close_form();
         }
-
-        this.props.addEventAction(event);
-        this.props.close_form();
     }
 
     generateKey = (e) => {

@@ -1,6 +1,9 @@
 import React from 'react'
 
 
+/**
+ * Empty event to handle empty events lists.
+ */
 const EmptyEvent = () => {
     return (
         <div className="card event-summary">

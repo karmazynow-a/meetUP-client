@@ -6,6 +6,9 @@ import LoginError from '../authentication/LoginError'
 import {editUserAction} from '../../store/actions/userReducerActions'
 
 
+/**
+ * Form to edit account details: first name, last name and password.
+ */
 class EditAccount extends Component {
     state = {
         password: '',

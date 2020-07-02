@@ -3,6 +3,9 @@ import React from 'react'
 import Participant from './Participant'
 
 
+/**
+ * Display list of participants wrapped in Participant component.
+ */
 const ParticipantList = ({participants}) => {
 
     var outputParticipants = participants && participants.map(participant => {

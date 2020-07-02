@@ -4,6 +4,9 @@ import moment from 'moment'
 import Comment from './Comment'
 
 
+/**
+ * Display comments list with Comment components.
+ */
 const CommentList = ({comments}) => {
     var sortedComments = comments.sort((a,b) => {
         return moment(a.date, 'DD-MM-YYYY HH:mm') - 

@@ -1,5 +1,6 @@
-//currently processed event
-
+/**
+ * Initial state of store used to hold information about currently processed event.
+ */
 const initState = {
     details: {},
     participants: [],
@@ -27,12 +28,6 @@ const eventReducer = (state = initState, action) => {
             comments: action.comments
         }
     }
-    else if (action.type === 'ADD_COMMENT') {
-        return state
-    }
-    else if (action.type === 'DELETE_COMMENT') {
-        return state
-    }
     else if (action.type === 'FIND_EVENT') {
         return {
             ...state,
@@ -46,16 +41,6 @@ const eventReducer = (state = initState, action) => {
             isLatestKeyFound: null
         }
     }
-    else if (action.type === 'DELETE_EVENT') {
-        return state;
-    }
-    else if (action.type === 'ADD_EVENT') {
-        return state;
-    }
-    else if (action.type === 'EDIT_EVENT') {
-        return state;
-    }
-
 
     return state;
 }

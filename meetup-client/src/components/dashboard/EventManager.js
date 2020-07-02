@@ -8,6 +8,9 @@ import LoginError from '../authentication/LoginError'
 import {getAuthorEventsAction} from '../../store/actions/userReducerActions'
 
 
+/**
+ * Component to store CreateEvent component, that will appear on button click.
+ */
 class AddEventSection extends Component {
     state = {
         createFormVisible: false,
@@ -49,6 +52,12 @@ class AddEventSection extends Component {
 
 }
 
+
+
+/**
+ * Displays event manager dashboard to manage all events that user is organizing.
+ * User can also edit and add new events here.
+ */
 class EventManager extends Component {
 
     componentDidMount = () => {

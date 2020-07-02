@@ -8,6 +8,10 @@ import LoginError from '../authentication/LoginError'
 import {getPartEventsAction} from '../../store/actions/userReducerActions'
 
 
+/**
+ * Displays user's dashboard with lists of events, that user is participating in and
+ * form to find new events.
+ */
 class Dashboard extends Component {
 
     componentDidMount = () => {

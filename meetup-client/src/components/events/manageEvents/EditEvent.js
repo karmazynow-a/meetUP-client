@@ -7,6 +7,10 @@ import "react-datepicker/dist/react-datepicker.css"
 import {editEventAction} from '../../../store/actions/eventReducerActions'
 
 
+/**
+ * Component to edit event details, like date, key and name.
+ * Similar to CreateEvent there are random key generator and date picker.
+ */
 class EditEvent extends Component {
     state = {
         name: '',

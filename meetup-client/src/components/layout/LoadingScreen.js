@@ -1,6 +1,10 @@
 import React from 'react'
 
 
+/**
+ * Display loading screen, used when there are delays in
+ * store access - db queries are handled.
+ */
 const LoadingScreen = () => {
     return (
         <div className="container">

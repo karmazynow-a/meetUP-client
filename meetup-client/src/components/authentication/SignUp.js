@@ -6,6 +6,12 @@ import { Redirect } from 'react-router-dom'
 import LoadingScreen from '../layout/LoadingScreen'
 import {signupAction} from '../../store/actions/userReducerActions'
 
+
+/**
+ * Component displays form to sign up. After submission it validates inputs:
+ * first name, last name, e-mail and password, dispatch signup action and 
+ * reacts to the result: redirect to home page or display an error.
+ */
 class SignUp extends Component {
     state = {
         password: '',

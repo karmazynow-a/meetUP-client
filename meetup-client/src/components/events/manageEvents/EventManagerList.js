@@ -5,6 +5,9 @@ import ManageEvent from './ManageEvent'
 import EmptyEvent from '../EmptyEvent'
 
 
+/**
+ * Displays list with events in event manager dashboard.
+ */
 const EventManagerList = ({events}) => {
     var sortedEvents = events.sort((a,b) => {
         return moment(a.date, 'DD-MM-YYYY HH:mm') - 
