@@ -57,6 +57,7 @@ public class RestJPA {
     @Produces({MediaType.APPLICATION_JSON})
 	public Object getPersonByEmail(@PathParam("email") String email) {
     	String query = "SELECT p.id, p.fname, p.lname, p.email, p.password FROM Person p WHERE p.email= :email";
+		@SuppressWarnings("rawtypes")
 		List people = entityManager.createQuery(query, Person.class).setParameter("email", email).getResultList();
 		System.out.println("List " + people.toString());
 		if (people.isEmpty()) {
