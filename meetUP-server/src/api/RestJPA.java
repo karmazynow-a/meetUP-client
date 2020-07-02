@@ -22,6 +22,12 @@ import model.participation.CompositeKey;
 import model.participation.Participation;
 import model.person.Person;
 
+/**
+* Class to provide REST JPA connection to database, and handle HTTP methods.
+* Besides CRUD operation, few more GET queries were prepared on demand of 
+* the client application.
+*/
+
 @Path("/rest")
 public class RestJPA {
 	
@@ -29,6 +35,9 @@ public class RestJPA {
     private EntityManager entityManager;
     private EntityTransaction entityTransaction;
     
+    /**
+    * Default constructor that creates EntityManager.
+    */
     public RestJPA() {
         managerFactory = Persistence.createEntityManagerFactory("PU_Postgresql");
         entityManager = managerFactory.createEntityManager();
@@ -36,6 +45,14 @@ public class RestJPA {
     }
     
 	/*** PERSON MAPPING ***/
+    
+    /**
+    * GET method
+    * Get all records from Person table using NamedQuery.
+    * 
+    * @return      list of all Person records from table
+    * @see         Person
+    */
     @GET
     @Path("/person")
     @Produces({MediaType.APPLICATION_JSON})
@@ -45,6 +62,14 @@ public class RestJPA {
     	return people;
 	}
     
+    /**
+    * GET method
+    * Get record from Person table identified by id.
+    * 
+    * @param  id	object's id
+    * @return       Person object
+    * @see          Person
+    */
     @GET
     @Path("/person/{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -52,6 +77,14 @@ public class RestJPA {
     	return (Person) entityManager.find(Person.class, Integer.parseInt(id));
 	}
     
+    /**
+    * GET method
+    * Get record from Person table identified by email.
+    * 
+    * @param  email	object's email
+    * @return       Person object
+    * @see          Person
+    */
     @GET
     @Path("/person/email/{email}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -67,6 +100,13 @@ public class RestJPA {
 		}
 	}
 	
+    /**
+    * DELETE method
+    * Delete record from Person table identified by id.
+    * 
+    * @param  id	object's id
+    * @return       1 if the operation was successful, otherwise 0
+    */
 	@DELETE
 	@Path("/person/{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -83,6 +123,14 @@ public class RestJPA {
 		}
 	}
 	
+    /**
+    * POST method
+    * Create record in Person table.
+    * 
+    * @param person	new Person object
+    * @return       object's id, if operation was successful, otherwise -1
+    * @see          Person
+    */
 	@POST
 	@Path("/person")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -99,6 +147,14 @@ public class RestJPA {
 		}
 	}
 	
+    /**
+    * PUT method
+    * Update record in Person table.
+    * 
+    * @param person	new Person object
+    * @return       object's id, if operation was successful, otherwise -1
+    * @see          Person
+    */
 	@PUT
 	@Path("/person")
 	@Consumes({MediaType.APPLICATION_JSON})
