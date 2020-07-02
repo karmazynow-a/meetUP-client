@@ -97,8 +97,17 @@
 \cfoot{\thepage}
 
 \section{Wstęp}
-Niniejszy dokument stanowi dokumentację projektu zrealizowanego w ramach przedmiotu \textit{Zaawansowanie Technologie Internetowe}. Została przygotowana aplikacja 
-z wykorzystaniem technologii \textit{Java API for RESTful Web Services}.
+Niniejszy dokument stanowi dokumentację projektu zrealizowanego w ramach przedmiotu \textit{Zaawansowanie Technologie Internetowe}. 
+
+Projekt stanowi aplikacja \textit{meetUP}, która umożliwia jej klientom zapisywanie się na prywatne wydarzenia. W internecie często brakuje prywatności, szczególnie na serwisach takich jak \textit{Facebook}, gdzie wiadomość o wzięciu udziału w wydarzeniu jest publikowana obserwującym danej osoby. Dodatkowo, aby zaprosić kogoś na wydarzenie, należy najpierw dodać daną osobę do grona znajomych.
+
+W aplikacji \textit{meetUP} na wydarzenie można zaprosić wybrane osoby poprzez udostępnienie unikalnego kodu, który w razie upublicznienia osobom niechcianym można zmienić. Uczestnicy mają również możliwość dodawania komentarzy do danego wydarzenia.
+
+Każdy zarejestrowany użytkownik ma możliwość nie tylko uczestnictwa, ale również zakładania własnych wydarzeń z wybranym kodem.
+
+
+\subsection{Wykorzystane technologie}
+Aplikacja serwera została przygotowana z wykorzystaniem technologii \textit{Java API for RESTful Web Services}, \textit{JPA}.
 
 Do stworzenia aplikacji klienta został wykorzystany framework \textit{ReactJS} z wykorzystaniem dodatkowych bibliotek i pakietów, takich jak \textit{redux}, \textit{axios}, \textit{moment.js} czy \textit{Materialize}.
 
@@ -111,7 +120,7 @@ Do projektu została również przygotowana baza danych \textit{PostgreSQL} umie
 \pagebreak
 \section{Aplikacja serwera}
 \subsection{Funkcjonalności}
-W ramach projektu został stworzony serwer, którego zadaniem jest odpytywanie bazy danych o odpowiednie informacje. Został on przygotowany z użyciem technologii \textit{JPA} oraz \textit{AspectJ} do logowania działania serwera.
+W ramach projektu został stworzony serwer, którego zadaniem jest odpytywanie bazy danych o odpowiednie informacje. Został on przygotowany z użyciem technologii \textit{JPA} oraz \textit{AspectJ} do logowania działania serwera. Do poprawnego działania serwisu wykorzystującego AJAX została również wdrożona technologia \textit{CORS (Cross-Origin Resource Sharing)}.
 
 Aby przybliżyć funkcjonalności serwera konieczna jest znajomość organizacji bazy danych, przedstawiona poniżej.
 
@@ -223,18 +232,65 @@ Kod źródłowy aplikacji klienta został dokumentowany za pomocą adnotacji \te
 
 Działanie serwera zostało szczegółowo przetestowane za pomocą testów jednostkowych. Do ich wykonania zostały użyte takie narzędzia jak \textit{curl} oraz przeglądarka \textit{Chromium}. Przykładowe testy zostały przedstawione poniżej.
 
+Dodatkowo przeprowadzane były ręczne testy wydajnościowe i funkcjonalne dla aplikacji klienta. Finalna aplikacja spełniała wszystkie założone wymagania.
+
+\subsection{Testowanie narzędziem $curl$}
+Na listingu poniżej znajduje się przykładowy zestaw testów do zapytań dotyczących komentarzy, wraz z uzyskanymi wynikami.
+\begin{lstlisting}[ mathescape=true, basicstyle=\scriptsize]
+curl -H "Content-type: application/json" -d '{"password": "dummypass", "fname": "Test", "lname": "Test","email": "test@test.com" }' -X POST http://localhost:8088/meetUP-server/db/rest/person
+> 11
+
+curl -X GET http://localhost:8088/meetUP-server/db/rest/person/11
+> {"id":11,"fname":"Test","lname":"Test","email":"test@test.com","password":"dummypass"}
+
+curl -H "Content-type: application/json" -d '{"id": 11, "password": "dummypass", "fname": "Test1", "lname": "Zmiana","email": "test@test.com" }' -X PUT http://localhost:8088/meetUP-server/db/rest/person
+> 11
+
+curl -X GET http://localhost:8088/meetUP-server/db/rest/person/11
+> {"id":11,"fname":"Test1","lname":"Zmiana","email":"test@test.com","password":"dummypass"}
+
+curl -X DELETE http://localhost:8088/meetUP-server/db/rest/person/11
+> 1
+
+curl -X GET http://localhost:8088/meetUP-server/db/rest/person/11
+>
+\end{lstlisting}
+
+Wyniki testów porównywane były z referencją. Dzięki nim można było sprawdzić poprawność działania serwisu \textit{REST}, czy wszystkie operacje poprawnie działają i są wspierane. Testy dotyczące konkretnych niedozwolonych wartości były wykonywane za pomocą \textit{Chromium}.
+
+\subsection{Testowanie przeglądarką Chromium}
+
+
 \pagebreak
 \section{Wdrożenie}
 
 \subsection{Serwer}
+Przed przystąpieniem do wdrażania należy uzupełnić plik \verb+WebContent/META-+  \verb+INF/context.xml+ z danymi potrzebnymi do połączenia z bazą danych. Konieczne jest również pobranie bibliotek \verb+postgresql-*.jar+ oraz  \verb+jstl-*.jar+ i umieszczenie ich w katalogu \verb+WebContent\lib+.
+
+\vspace{0.5cm}
+
 Aplikację serwera można uruchomić na lokalnym serwerze w środowisku \textit{Ecplise}. Należy wykonać następujące operacje:
+\begin{enumerate}
+\item W środowisku \textit{Eclipse} należy kliknąć PPM na nazwę projektu.
+\item Następnie należy wybrać \textit{Run As} oraz \textit{Run On Serwer}.
+\item W nowym oknie możemy wybrać serwer - należy wybrać \textit{Tomcat v9.0} i przejść dalej.
+\item W kolejnym kroku wybieramy aplikacje na serwerze - należy upewnić się, że \item{meetUP-serwer} znajduje się na liście aplikacji skonfigurowanych - po prawej stronie.
+\item Po kliknięciu \textit{Finish} zostanie uruchomiona strona w wbudowanej przeglądarce.
+\end{enumerate}
 
+Tak uruchomiony serwer jest dostępny pod lokalnym adresem: \url{http://localhost:8088/meetUP-server/db/rest/event}.
 
-Tak uruchomiony serwer jest dostępny pod adresem: \url{TODO}.
+\vspace{0.5cm}
 
 Aby wdrożyć aplikację do chmury \textit{IBM Cloud} należy najpierw przygotować plik \textit{manifest.yml}. Przykładowy plik przedstawiono poniżej.
 \begin{lstlisting}[ mathescape=true, basicstyle=\scriptsize]
-manifest
+applications:
+- buildpacks: 
+  - java_buildpack
+  path: <nazwa archiwum war>
+  memory: 700M
+  instances: 1
+  name: <nazwa aplikacji>
 \end{lstlisting}
 
 Również konieczne jest archiwum \textit{war} proejktu serwera, które możemy stworzyć za pomocą środowiska \textit{Ecplise}. W tym celu należy wybrać kolejno:
@@ -242,14 +298,15 @@ Również konieczne jest archiwum \textit{war} proejktu serwera, które możemy 
 Następnie, należy wykonać następujące polecenia:
 \begin{lstlisting}[ mathescape=true, basicstyle=\scriptsize]
 ibmcloud login
-ibmcloud cf target ?
+ibmcloud target - -cf
 ibmcloud cf push
+ibmcloud logout
 \end{lstlisting}
 
 \subsection{Klient}
 Aplikację klienta można uruchomić zarówno na maszynach wirtualnych używanych w ramach przedmiotu, jak i na własnym, lokalnym komputerze. Warunkiem jest posiadanie narzędzia \verb\npm\.
 
-Przed uruchomieniem należy uzupełnić plik \verb+\meetup-client\ser\config.js+ w którym powinien znaleźć się link do serwera.
+Przed uruchomieniem należy uzupełnić plik \verb+\meetup-client\src\config.js+ w którym powinien znaleźć się link do serwera.
 
 Aby uruchomić lokalnie aplikację należy wykonać następujące polecenia:
 \begin{lstlisting}[]
@@ -260,20 +317,47 @@ npm start
 
 Aplikacja zostanie uruchomiona lokalnie, najczęściej na porcie \verb\3000\.
 
+\vspace{0.5cm}
+
 Aby wdrożyć aplikację do środowiska \textit{IBM Cloud} należy najpierw przygotować plik \textit{manifest.yml}. Przykładowy plik przedstawiono poniżej.
 \begin{lstlisting}[ mathescape=true, basicstyle=\scriptsize]
-manifest
+applications:
+- buildpacks: 
+  - https://github.com/cloudfoundry/staticfile-buildpack.git
+  path: build/
+  memory: 500M
+  instances: 1
+  name: <nazwa aplikacji>
 \end{lstlisting}
 
 Powinien on znaleźć się w katalogu \verb\meetup-client\. Następnie, aby zbudować aplikację klienta i wdrożyć ją do chmury należy wykonać polecenia:
 \begin{lstlisting}[ mathescape=true, basicstyle=\scriptsize]
-npm build
-...
+npm run build
+npm install cross-env
+npm run build-prd
 
 ibmcloud login
-ibmcloud cf target ?
+ibmcloud target - -cf
 ibmcloud cf push
+ibmcloud logout
 \end{lstlisting}
+
+\subsection{Generowanie dokumentacji}
+W projekcie została dodana dokumentacja \textit{Javadoc} oraz \textit{JSdoc}. Poniżej przedstawiona zostały instrukcje, jak wygenerować dokumentacje \textit{HTML} na podstawie adnotacji.
+
+\vspace{0.5cm}
+
+Aby wygenerować dokumentację \textit{Javadoc} można skorzystać z \textit{ IDE Eclipse} dostępnego na maszynach wirtualnych. Należy wykonać kolejno kroki:
+\begin{enumerate}
+\item Wybrać z menu \textit{Project}, a następnie \textit{Generate Javadoc}.
+\item W oknie należy wybrać ścieżkę do narzędzia (niestety, niedostępnego na maszynach wirtualnych, udostępnionych w ramach przedmiotu).
+\item W kolejnych punktach należy wybrać projekt - \textit{meetUP-server}, wszystkie klasy, widoczność \textit{public}, oraz lokalizację dokumentacji.
+\item W następnych krokach wybieramy tytuł, tagi - najczęściej odpowiednie będą opcje domyślne.
+\item Przechodzimy do ostatniego okna i wybieramy \textit{Finish}.
+\end{enumerate}
+
+\vspace{0.5cm}
+Aby wygenerować dokumentację \textit{JSdoc} 
 
 \pagebreak
 \section{Podręcznik użytkownika}
