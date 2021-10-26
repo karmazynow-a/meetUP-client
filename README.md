@@ -1,6 +1,8 @@
 # meetUP
 The web app to sign up for private events. Users can find events only by entering the unique keys and sign up without the awareness of bystanders.
 
+Server app avaliable https://github.com/karmazynow-a/meetUP-server
+
 ## Technologies
 ### Client
 Framework ReactJS + Redux.
